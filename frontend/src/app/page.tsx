@@ -1,103 +1,91 @@
-import Image from "next/image";
+// frontend/src/app/page.tsx
+import Image from "next/image"; // 画像を使用する場合
+import Link from "next/link";   // ページ内リンクを使用する場合
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
+    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-120px)] bg-gray-50 text-gray-800">
+      {/* ヒーローセクション */}
+      <section className="relative w-full h-96 md:h-[500px] bg-gradient-to-r from-green-500 to-blue-500 flex items-center justify-center text-white overflow-hidden">
+        {/* プレースホルダー画像 (publicフォルダに置くか、外部URLを使用) */}
+        <Image 
+          src="/hero-akita.jpg" // public/hero-akita.jpg に画像を置く想定
+          alt="秋田の美しい風景"
+          fill // 親要素に合わせて画像を埋める
+          style={{ objectFit: 'cover' }}
+          className="absolute inset-0 z-0 opacity-70"
+          priority // LCP対策として優先的に読み込む
         />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+        <div className="relative z-10 text-center p-4">
+          {/* ロゴ (もしあれば) */}
+          {/* <Image src="/logo.png" alt="農泊ロゴ" width={100} height={100} className="mx-auto mb-4" /> */}
+          <h1 className="text-4xl md:text-6xl font-extrabold leading-tight drop-shadow-lg">
+            秋田、暮らし体験。
+          </h1>
+          <p className="mt-4 text-xl md:text-2xl font-light drop-shadow-md">
+            ゼミ合宿で、地域の魅力と人々と出会う。
+          </p>
+          <p className="mt-2 text-md md:text-lg font-light drop-shadow-md">
+            首都圏の大学ゼミと秋田の農泊施設をつなぐWebサービス。
+          </p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
+
+      {/* サービス紹介セクション */}
+      <section className="container mx-auto py-16 px-4 text-center">
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+          農泊プロジェクトとは
+        </h2>
+        <p className="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+          秋田の豊かな自然環境の中で、地域の方々と交流しながら研究や学びを深める「フィールドワーク×地域交流」の新しい形を提案します。地域の人手不足解消、交流機会の創出、若者との接点強化に貢献します。
+        </p>
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h3 className="text-xl font-semibold text-green-700 mb-3">学びを深める</h3>
+            <p className="text-gray-600">地域データを活用した研究活動や現地調査をサポート。リアルな学びの場を提供します。</p>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h3 className="text-xl font-semibold text-blue-700 mb-3">地域とつながる</h3>
+            <p className="text-gray-600">農泊施設での滞在を通じて、温かい地域の人々との触れ合いを体験できます。</p>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h3 className="text-xl font-semibold text-purple-700 mb-3">持続可能な交流</h3>
+            <p className="text-gray-600">双方向のメリットを追求し、地域活性化と関係人口創出を目指します。</p>
+          </div>
+        </div>
+      </section>
+
+      {/* ナビゲーションリンクボタンセクション */}
+      <section className="w-full bg-gray-100 py-16 px-4">
+        <div className="container mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+            体験を始める
+          </h2>
+          <div className="flex flex-col md:flex-row justify-center items-center gap-6">
+            <Link 
+              href="/towns" 
+              className="bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-full shadow-lg transition-colors text-lg md:text-xl w-full md:w-auto text-center"
+            >
+              町を探す
+            </Link>
+            <Link 
+              href="/houses" 
+              className="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-4 px-8 rounded-full shadow-lg transition-colors text-lg md:text-xl w-full md:w-auto text-center"
+            >
+              家を探す
+            </Link>
+            <Link 
+              href="/contact" 
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-full shadow-lg transition-colors text-lg md:text-xl w-full md:w-auto text-center"
+            >
+              お問い合わせ
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 仮のフッターとの隙間調整。LayoutでFooterがラップされるので不要になる場合も */}
+      {/* <div className="h-20"></div> */}
     </div>
   );
 }

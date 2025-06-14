@@ -1,3 +1,71 @@
+/* frontend/src/app/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ★★★ 全ての要素に対する強力なCSSリセット ★★★ */
+*, ::before, ::after {
+  box-sizing: border-box; /* すべての要素でbox-sizingをborder-boxにする */
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  line-height: 1.15; /* デフォルトの行の高さを設定 */
+  -webkit-text-size-adjust: 100%; /* テキストサイズの自動調整を無効化 */
+  height: 100%; /* html要素がビューポートの高さを占めるように */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh; /* body要素がビューポートの高さを最低限占めるように */
+  overflow-x: hidden; /* 横スクロールバーの発生を防ぐため */
+  position: relative; /* 必要に応じて子要素のabsolute配置の基準にする */
+}
+
+/* Swiperのナビゲーション矢印の色を白くする */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #fff !important; /* 白に設定 */
+  --swiper-navigation-size: 30px; /* 矢印のサイズ調整 */
+}
+
+/* Swiperのページネーション（ドット）の色を白にする */
+.swiper-pagination-bullet {
+  background-color: rgba(255, 255, 255, 0.5) !important; /* 少し透明な白 */
+  opacity: 1 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #fff !important; /* アクティブなドットは不透明な白 */
+}
+
+
+/* カスタムアニメーション（Tailwind CSSのJITモードが自動生成しない場合用） */
+/* animate-fade-in */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-fade-in {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+/* animate-slide-up */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-slide-up {
+  animation: slideUp 0.8s ease-out forwards;
+}
+
+/* アニメーション遅延 */
+.animation-delay-200 { animation-delay: 0.2s; }
+.animation-delay-400 { animation-delay: 0.4s; }
+
+/* カスタムユーティリティ */
+.mt-screen {
+  margin-top: 100vh;
+}

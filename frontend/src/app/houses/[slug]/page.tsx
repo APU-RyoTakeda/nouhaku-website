@@ -1,112 +1,133 @@
-// frontend/src/app/houses/page.tsx
-// このファイルは、農泊施設の一覧を表示するページです。
+// frontend/src/app/houses/[slug]/page.tsx
+import Image from 'next/image';
+import Link from 'next/link';
 
-import Image from "next/image"; // 画像表示に必要
-import Link from "next/link";   // ページ内リンクに必要
-
-// Houseデータの型定義
-// バックエンドのAPIレスポンスに合わせて調整してください
+// Houseデータの型定義 (APIレスポンスに合わせて調整)
 interface House {
   id: number;
   name: string;
-  slug: string; // 詳細ページへのリンクに使用
+  slug: string;
   description: string;
-  image: string | null; // 画像URL (nullの場合もある)
-  location: string; // 必要であれば表示
-  capacity: number; // 必要であれば表示
-  // その他のフィールドがあればここに追加
+  image: string | null;
+  location: string;
+  capacity: number;
+  // 他にも詳細ページで表示したいフィールドがあれば追加
+  details?: string; // 例：より詳細な説明
+  amenities?: string[]; // 例：設備リスト
 }
 
-// データをフェッチする非同期関数（サーバーコンポーネント内で実行される）
-async function getHouses(): Promise<House[]> {
+// サーバーサイドで特定の家のデータをフェッチする非同期関数
+async function getHouseBySlug(slug: string): Promise<House | null> {
   try {
-    // DjangoバックエンドのAPIエンドポイント
-    // 環境によっては 'http://localhost:8000' の方が良いかもしれません
-    const res = await fetch('http://127.0.0.1:8000/api/houses/', {
-      // データを常に最新の状態に保つため、キャッシュを無効にするオプション（開発時）
-      // 本番では適切なキャッシュ戦略を検討してください
-      cache: 'no-store', 
+    // DjangoバックエンドのAPIエンドポイント（slugでフィルタリング）
+    const res = await fetch(`http://127.0.0.1:8000/api/houses/${slug}/`, {
+      cache: 'no-store', // 開発中はキャッシュを無効
     });
 
     if (!res.ok) {
-      // APIからエラーが返された場合の処理
+      if (res.status === 404) {
+        console.warn(`House with slug "${slug}" not found.`);
+        return null; // 404の場合はnullを返す
+      }
       const errorText = await res.text();
-      console.error(`API fetching error: ${res.status} ${res.statusText}`, errorText);
-      throw new Error(`Failed to fetch houses: ${res.status} ${res.statusText}`);
+      console.error(`API fetching error for slug "${slug}": ${res.status} ${res.statusText}`, errorText);
+      throw new Error(`Failed to fetch house: ${res.status} ${res.statusText}`);
     }
 
-    const data = await res.json();
-    return data; // APIレスポンスが直接House[]の配列であると想定
+    const data: House = await res.json();
+    return data;
   } catch (error) {
-    console.error("Failed to fetch houses:", error);
-    // エラー時は空の配列を返すか、エラーページにリダイレクトすることも検討
-    return []; 
+    console.error(`Error fetching house with slug "${slug}":`, error);
+    return null; // エラー時はnullを返す
   }
 }
 
-// 家の一覧ページコンポーネント
-export default async function HousesPage() {
-  const houses = await getHouses(); // サーバーサイドでデータを取得
+// 家の詳細ページコンポーネント
+export default async function HouseDetailPage({ params }: { params: { slug: string } }) {
+  const { slug } = await params; // URLからslugパラメータを取得
+  const house = await getHouseBySlug(slug); // 特定の家データを取得
 
+  if (!house) {
+    // 家が見つからない場合やエラーの場合の表示
+    return (
+      <div className="container mx-auto px-4 py-20 text-center min-h-screen"> {/* min-h-screenで最低高さを確保 */}
+        <h1 className="text-3xl font-bold text-gray-800 mb-4">お探しの農泊施設は見つかりませんでした。</h1>
+        <p className="text-lg text-gray-600 mb-8">URLを確認するか、一覧ページに戻ってください。</p>
+        <Link href="/houses" className="px-6 py-3 bg-[#2ECC71] text-white rounded-full font-semibold hover:bg-[#28B463] transition-colors">
+          農泊施設一覧に戻る
+        </Link>
+      </div>
+    );
+  }
+
+  // 家の詳細情報を表示
   return (
-    <div className="container mx-auto p-4 md:p-8 bg-gray-50 min-h-screen">
-      <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 text-center mb-10 border-b-4 border-yellow-600 pb-4">
-        農泊施設を探す
-      </h1>
-
-      {houses.length === 0 ? (
-        // データがない場合のメッセージ
-        <div className="text-center text-xl text-gray-600 py-20">
-          現在、登録されている農泊施設はありません。
-          <p className="mt-4">Django管理サイトから施設を追加してください。</p>
-        </div>
-      ) : (
-        // 家のカードをレスポンシブなグリッドで表示
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {houses.map((house) => (
-            // 各家をカードとして表示
-            <div 
-              key={house.id} 
-              className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl flex flex-col"
-            >
-              <div className="relative w-full h-56">
-                <Image
-                  src={house.image || "https://via.placeholder.com/800x600?text=No+Image"} // 画像がない場合はプレースホルダー
-                  alt={house.name}
-                  fill // 親要素に合わせて画像を埋める
-                  style={{ objectFit: 'cover' }}
-                  className="rounded-t-lg"
-                  // Next.jsのImageコンポーネントのホスト設定がnext.config.jsにあるか確認
-                  // images: { domains: ['via.placeholder.com', '127.0.0.1'], } など
-                />
-              </div>
-              <div className="p-6 flex flex-col flex-grow">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-2">
-                  {house.name}
-                </h2>
-                <p className="text-gray-700 text-base mb-4 flex-grow line-clamp-3">
-                  {/* 説明文が長い場合に省略するTailwindのクラス */}
-                  {house.description}
-                </p>
-                {house.location && (
-                  <p className="text-gray-600 text-sm mb-2">所在地: {house.location}</p>
-                )}
-                {house.capacity && (
-                  <p className="text-gray-600 text-sm mb-4">収容人数: {house.capacity}名</p>
-                )}
-                
-                {/* 詳細ページへのリンクボタン */}
-                <Link 
-                  href={`/houses/${house.slug}`} // slugを使って詳細ページへリンク
-                  className="mt-auto inline-block bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-full shadow-md transition-colors text-center"
-                >
-                  詳細を見る
-                </Link>
-              </div>
+    <div className="container mx-auto px-4 py-12 md:py-16">
+      <div className="bg-white rounded-xl shadow-lg overflow-hidden md:flex">
+        {/* 画像セクション */}
+        <div className="relative w-full md:w-1/2 h-80 md:h-auto min-h-60 bg-gray-200">
+          {house.image ? (
+            <Image
+              src={house.image}
+              alt={house.name}
+              fill
+              style={{ objectFit: 'cover' }}
+              className="md:rounded-l-xl"
+            />
+          ) : (
+            <div className="flex flex-col items-center justify-center w-full h-full text-gray-500 text-sm">
+              <svg className="w-16 h-16 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L20 18m-4-10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+              <span>画像なし</span>
             </div>
-          ))}
+          )}
         </div>
-      )}
+
+        {/* 詳細情報セクション */}
+        <div className="p-6 md:p-8 flex-1 flex flex-col justify-between">
+          <div>
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              {house.name}
+            </h1>
+            <p className="text-gray-700 text-lg mb-6 leading-relaxed">
+              {house.description}
+            </p>
+            {house.details && ( // より詳細な説明があれば表示
+              <p className="text-gray-600 text-base mb-4 italic">
+                {house.details}
+              </p>
+            )}
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700 text-base mb-6">
+              {house.location && (
+                <div className="flex items-center">
+                  <svg className="w-5 h-5 mr-2 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 20.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd"></path></svg>
+                  <span>所在地: {house.location}</span>
+                </div>
+              )}
+              {house.capacity && (
+                <div className="flex items-center">
+                  <svg className="w-5 h-5 mr-2 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17.883 14.94A8.77 8.77 0 0010 13a8.77 8.77 0 00-7.883 1.94c-.378.18-.59.574-.564.978l.22 2.646A1 1 0 002.88 19h14.24a1 1 0 00.957-1.135l.22-2.646c.026-.404-.186-.798-.564-.978z"></path></svg>
+                  <span>定員: {house.capacity}名</span>
+                </div>
+              )}
+              {house.amenities && house.amenities.length > 0 && ( // 設備があれば表示
+                <div className="flex items-center col-span-full">
+                  <svg className="w-5 h-5 mr-2 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M11 15a4 4 0 10-4 4v1a1 1 0 11-2 0v-1a6 6 0 1110.89-4.05l.31-1.932A6.001 6.001 0 0017 10V8a1 1 0 112 0v2a8 8 0 10-14.773 3.753l.972.486A6.001 6.001 0 0011 15z" clipRule="evenodd"></path></svg>
+                  <span>設備: {house.amenities.join(', ')}</span>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* 問い合わせボタン */}
+          <Link 
+            href="/contact" 
+            className="mt-6 block w-full text-center bg-[#2ECC71] hover:bg-[#28B463] text-white font-bold py-3 px-6 rounded-full shadow-md transition-colors text-lg"
+          >
+            この農泊施設に問い合わせる
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }

@@ -129,3 +129,31 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+import os # osモジュールをインポート
+
+# BASE_DIR は既に定義されているはずです
+
+# アップロードされたメディアファイルを保存するディレクトリのパス
+# プロジェクトのルートディレクトリ (manage.pyと同じ階層) に 'media' フォルダが作成され、その中に画像が保存されます。
+# 例: 'nouhaku-website/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# メディアファイルにアクセスするためのURLプレフィックス
+# 例えば、http://127.0.0.1:8000/media/your_image.jpg のようにアクセスできるようになります。
+MEDIA_URL = '/media/'
+
+# CORS設定 (settings.pyに既にCORS_ALLOWED_ORIGINSがない場合)
+# フロントエンドのポート3000からのアクセスを許可します
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+
+# (もしMIDDLEWAREに'corsheaders.middleware.CorsMiddleware'がない場合も追加してください)
+# MIDDLEWARE = [
+#     'django.middleware.security.SecurityMiddleware',
+#     'corsheaders.middleware.CorsMiddleware', # ここに追加
+#     'django.contrib.sessions.middleware.SessionMiddleware',
+#     # ... 他のミドルウェア ...
+# ]

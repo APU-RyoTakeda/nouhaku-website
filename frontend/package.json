@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "dev-clean": "Remove-Item -Recurse -Force .\\.next\\ && npm run dev"
   },
   "dependencies": {
     "hamburger-react": "^2.5.2",

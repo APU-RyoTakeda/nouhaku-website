@@ -1,16 +1,20 @@
 // frontend/src/app/page.tsx
 import HeroSection from '@/components/sections/HeroSection';
-import FeaturesSection from '@/components/sections/FeaturesSection'; // FeaturesSectionをインポート
+import FeaturesSection from '@/components/sections/FeaturesSection';
+import HouseSpotlightSection from '@/components/sections/HouseSpotlightSection';
+import TownSpotlightSection from '@/components/sections/TownSpotlightSection'; // TownSpotlightSectionをインポート
 
 export default function Home() {
   return (
     <>
       <HeroSection />
-      <FeaturesSection /> {/* ここにFeaturesSectionを追加 */}
-      {/* 今後、HouseSpotlightSectionなどを追加していきます */}
-      <section className="py-20 text-center">
-        <h2 className="text-3xl font-bold">次のセクションがここから始まります</h2>
-        <p className="mt-4 text-gray-600">今後、様々なコンテンツブロックを追加していきます。</p>
+      <FeaturesSection />
+      <HouseSpotlightSection />
+      <TownSpotlightSection /> {/* ここにTownSpotlightSectionを追加 */}
+      {/* 最後にCTAセクションなどを追加することも検討できます */}
+      <section className="py-20 text-center bg-white">
+        <h2 className="text-3xl font-bold">トップページの主要コンテンツが揃いました！</h2>
+        <p className="mt-4 text-gray-600">この後、必要に応じて問い合わせフォームや予約ページの実装に進みます。</p>
       </section>
     </>
   );

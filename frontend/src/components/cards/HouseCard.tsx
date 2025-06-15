@@ -24,9 +24,8 @@ export default function HouseCard({ slug, imageUrl, imageAlt, title, location, d
           className="transition-transform duration-300 group-hover:scale-105"
           sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
         />
-        {/* 仮のバッジなど */}
-        <div className="absolute top-2 left-2 bg-green-600 text-white text-xs font-bold px-2 py-1 rounded-full">おすすめ</div>
       </div>
+      
       <div className="p-4">
         <h3 className="text-xl font-semibold text-gray-800 mb-1 line-clamp-1">{title}</h3>
         <p className="text-sm text-gray-500 mb-2">{location}</p>

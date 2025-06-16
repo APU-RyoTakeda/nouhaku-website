@@ -7,7 +7,6 @@ FROM node:20.12.2-alpine
 WORKDIR /app
 
 # 必要なファイルとディレクトリを具体的にコピーする
-# frontendフォルダ内のpackage.jsonとpackage-lock.jsonをコピー
 COPY package.json ./
 COPY package-lock.json ./
 
@@ -18,15 +17,13 @@ RUN npm install
 COPY src ./src
 COPY public ./public
 
-# その他の必要なルートファイルも個別にコピー（Next.jsの設定ファイルなど）
+# その他の必要なルートファイルも個別にコピー
+# next.config.ts を next.config.mjs に変更
 COPY next.config.mjs ./
 COPY tailwind.config.ts ./
 COPY tsconfig.json ./
-# もし他に frontend/ 直下にある重要な設定ファイルがあればここに追加してください
-# 例: COPY postcss.config.js ./  (もしあれば)
+COPY postcss.config.mjs ./
+COPY eslint.config.mjs ./
 
 # ポートの公開 (Docker Composeでマッピングされる)
 EXPOSE 3000
-
-# コマンドはdocker-compose.ymlで指定されるため、ここでは不要です
-# CMD ["npm", "run", "dev"]

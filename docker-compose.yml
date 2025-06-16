@@ -1,0 +1,57 @@
+# docker-compose.yml
+
+version: '3.8' # この行は警告が出ますが、無視してOKです
+
+services:
+  db:
+    image: postgres:15-alpine
+    volumes:
+      - pg_data:/var/lib/postgresql/data/
+    # env_file: # ★この行とその下の行を削除します！
+    #   - ./backend/.env.local
+    environment: # 環境変数はここに直接記述
+      - POSTGRES_DB=farmstay_db        # ★直接記述したまま
+      - POSTGRES_USER=farmstay_user    # ★直接記述したまま
+      - POSTGRES_PASSWORD=T4keastr0ll  # ★直接記述したまま
+    ports:
+      - "5432:5432"
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+      - media_data:/app/media
+    ports:
+      - "8000:8000"
+    # env_file: # ★この行とその下の行を削除します！
+    #   - ./backend/.env.local
+    environment: # 環境変数はここに直接記述
+      - DJANGO_SECRET_KEY=your_secret_key_here # ★直接記述したまま
+      # もしDjangoのsettings.pyでDB情報を環境変数で取得しているなら、ここにも記述
+      - POSTGRES_DB=farmstay_db
+      - POSTGRES_USER=farmstay_user
+      - POSTGRES_PASSWORD=T4keastr0ll
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: frontend/Dockerfile
+    command: npm run dev
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_DJANGO_API_URL=http://backend:8000/api
+    depends_on:
+      - backend
+
+volumes:
+  pg_data:
+  media_data:

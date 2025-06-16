@@ -1,56 +1,41 @@
-# docker-compose.yml
+# docker-compose.yml (nouhaku-websiteのルートディレクトリに配置)
 
-version: '3.8' # この行は警告が出ますが、無視してOKです
+version: '3.8'
 
 services:
   db:
     image: postgres:15-alpine
     volumes:
       - pg_data:/var/lib/postgresql/data/
-    # env_file: # ★この行とその下の行を削除します！
-    #   - ./backend/.env.local
-    environment: # 環境変数はここに直接記述
-      - POSTGRES_DB=farmstay_db        # ★直接記述したまま
-      - POSTGRES_USER=farmstay_user    # ★直接記述したまま
-      - POSTGRES_PASSWORD=T4keastr0ll  # ★直接記述したまま
+    # env_file: は削除されたまま
+    environment: # ここに環境変数を直接記述します
+      - POSTGRES_DB=farmstay_db
+      - POSTGRES_USER=farmstay_user
+      - POSTGRES_PASSWORD=T4keastr0ll
     ports:
       - "5432:5432"
 
   backend:
     build:
-      context: .
-      dockerfile: backend/Dockerfile
-    command: python manage.py runserver 0.0.0.0:8000
+      context: . # ★プロジェクトのルートディレクトリをビルドコンテキストとする
+      dockerfile: backend/Dockerfile # ★backendフォルダ内のDockerfileを指定
+    command: python manage.py runserver 0.0.0.0:8000 # manage.pyはルートにある
     volumes:
-      - .:/app
+      - .:/app # ★プロジェクトルート全体をコンテナの/appにマウント
       - media_data:/app/media
     ports:
       - "8000:8000"
-    # env_file: # ★この行とその下の行を削除します！
-    #   - ./backend/.env.local
-    environment: # 環境変数はここに直接記述
-      - DJANGO_SECRET_KEY=your_secret_key_here # ★直接記述したまま
-      # もしDjangoのsettings.pyでDB情報を環境変数で取得しているなら、ここにも記述
+    # env_file: は削除されたまま
+    environment: # ここに環境変数を直接記述します
+      - DJANGO_SECRET_KEY=your_secret_key_here
       - POSTGRES_DB=farmstay_db
       - POSTGRES_USER=farmstay_user
       - POSTGRES_PASSWORD=T4keastr0ll
     depends_on:
       - db
 
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: frontend/Dockerfile
-    command: npm run dev
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-    ports:
-      - "3000:3000"
-    environment:
-      - NEXT_PUBLIC_DJANGO_API_URL=http://backend:8000/api
-    depends_on:
-      - backend
+  # frontend: # frontendサービスはこのdocker-compose.ymlから削除済みです
+  # （ローカルで直接 npm run dev するため）
 
 volumes:
   pg_data:

@@ -9,7 +9,7 @@ WORKDIR /app
 # docker-compose.ymlのbuild.contextがルートなので、ここでのパスはルート基準
 COPY requirements.txt /app/requirements.txt
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
 # プロジェクト全体（manage.pyやcore/, backend/, frontend/など全て）を/appにコピー
 COPY . /app

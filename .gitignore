@@ -1,0 +1,44 @@
+# Python / Django
+**/__pycache__/ # どの階層の __pycache__ も無視
+*.pyc
+*.sqlite3
+.venv
+venv/
+*.log
+*.pot
+*.mo
+
+# Environment variables (秘密情報を含むためGitから除外)
+.env
+.env.local
+*.env.local # .env.development.local なども無視するため
+
+# Node.js / Next.js (frontendディレクトリのものを除外)
+# frontend/ に既に .gitignore がある場合は、重複しないように注意
+# ルートで無視すれば、frontend/ 内の .gitignore は冗長になる可能性があります
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/.eslintcache
+frontend/.pnpm-store/
+frontend/.yarn/cache/
+frontend/.yarn/unplugged/
+frontend/.yarn/build-state.yml
+frontend/.yarn/install-state.tgz
+frontend/*.tsbuildinfo
+
+# IDE and editor files
+.vscode/        # VSCode settings (個人的な設定なのでGitに含めない)
+.idea/          # IntelliJ IDEA settings
+*.sublime-project
+*.sublime-workspace
+.DS_Store       # macOS system files
+Thumbs.db       # Windows system files
+
+# Docker
+# Docker Desktop が一時的に生成するファイルなどを無視
+.docker/
+# .dockerignore はGitに含めるべきファイルなので、ここには記述しません。

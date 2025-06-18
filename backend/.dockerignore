@@ -1,0 +1,6 @@
+# backend/.dockerignore
+__pycache__/
+*.pyc
+.env.local # backend/.env.local は COPY . /app でコンテナにコピーされないように除外
+.git/
+frontend/ # frontendディレクトリはbackendイメージに含めない

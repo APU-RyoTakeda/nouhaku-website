@@ -1,41 +1,34 @@
-# docker-compose.yml (nouhaku-websiteのルートディレクトリに配置)
-
-version: '3.8'
+# docker-compose.yml
+version: '3.8' # ★この行のスペルとインデントを再確認
 
 services:
   db:
     image: postgres:15-alpine
     volumes:
       - pg_data:/var/lib/postgresql/data/
-    # env_file: は削除されたまま
-    environment: # ここに環境変数を直接記述します
+    environment:
       - POSTGRES_DB=farmstay_db
       - POSTGRES_USER=farmstay_user
       - POSTGRES_PASSWORD=T4keastr0ll
     ports:
-      - "5432:5432"
+      - "5433:5432"
 
   backend:
     build:
-      context: . # ★プロジェクトのルートディレクトリをビルドコンテキストとする
-      dockerfile: backend/Dockerfile # ★backendフォルダ内のDockerfileを指定
-    command: python manage.py runserver 0.0.0.0:8000 # manage.pyはルートにある
+      context: .
+      dockerfile: backend/Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/app # ★プロジェクトルート全体をコンテナの/appにマウント
+      - .:/app
       - media_data:/app/media
     ports:
       - "8000:8000"
-    # env_file: は削除されたまま
-    environment: # ここに環境変数を直接記述します
-      - DJANGO_SECRET_KEY=your_secret_key_here
-      - POSTGRES_DB=farmstay_db
-      - POSTGRES_USER=farmstay_user
-      - POSTGRES_PASSWORD=T4keastr0ll
+    env_file:
+      - ./.env # このファイルが存在することを確認！
+      - ./backend/.env.local # このファイルは存在しているはず
+    # environment: # この行と、これ以降のenvironmentに関するコメントは全て削除する
     depends_on:
       - db
-
-  # frontend: # frontendサービスはこのdocker-compose.ymlから削除済みです
-  # （ローカルで直接 npm run dev するため）
 
 volumes:
   pg_data:

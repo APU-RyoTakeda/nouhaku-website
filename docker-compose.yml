@@ -1,5 +1,6 @@
-# docker-compose.yml
-version: '3.8' # ★この行のスペルとインデントを再確認
+# docker-compose.yml (nouhaku-websiteのルートディレクトリに配置)
+
+version: '3.8' # この行はwarningを避けるために削除してもOKですが、残していても動作します
 
 services:
   db:
@@ -11,7 +12,7 @@ services:
       - POSTGRES_USER=farmstay_user
       - POSTGRES_PASSWORD=T4keastr0ll
     ports:
-      - "5433:5432"
+      - "5433:5432" # ホスト側のポートが5433になっていることを確認
 
   backend:
     build:
@@ -24,11 +25,30 @@ services:
     ports:
       - "8000:8000"
     env_file:
-      - ./.env # このファイルが存在することを確認！
-      - ./backend/.env.local # このファイルは存在しているはず
-    # environment: # この行と、これ以降のenvironmentに関するコメントは全て削除する
+      - ./.env # プロジェクトルートの.envファイルが存在することを確認
+      - ./backend/.env.local # backendディレクトリ内の.env.localファイルが存在することを確認
+    # environment: # この行と、これ以降のenvironmentに関するコメントは全て削除されていることを確認
     depends_on:
       - db
+
+  # ★★★ ここから frontend サービスを追加 ★★★
+  frontend:
+    build:
+      context: ./frontend # frontend ディレクトリをビルドコンテキストとする
+      dockerfile: Dockerfile # frontend/Dockerfile を指定
+    ports:
+      - "3000:3000" # ホストの3000ポートをコンテナの3000ポートにマッピング
+    volumes:
+      - ./frontend:/app # ホストの frontend ディレクトリをコンテナの /app にマウント
+      - /app/node_modules # 匿名ボリュームで node_modules がホストから上書きされないようにする (重要!)
+    env_file:
+      - ./frontend/.env.local # frontend固有の環境変数があれば読み込む（もしあれば）
+    depends_on:
+      - backend # frontend は backend が起動してから起動するように依存関係を設定
+    environment:
+      # Next.jsからバックエンドAPIを叩くための環境変数
+      # Docker内部ネットワークのサービス名 'backend' を使う
+      NEXT_PUBLIC_API_URL: http://backend:8000 # ★重要: ここはサービスの解決名
 
 volumes:
   pg_data:

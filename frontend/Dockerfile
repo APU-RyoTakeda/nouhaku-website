@@ -13,17 +13,23 @@ COPY package-lock.json ./
 # 依存関係をインストール
 RUN npm install
 
-# frontendフォルダ内の src/ と public/ ディレクトリをコピー
-COPY src ./src
-COPY public ./public
+# ★★★★ ここから変更 ★★★★
 
-# その他の必要なルートファイルも個別にコピー
-# next.config.ts を next.config.mjs に変更
-COPY next.config.mjs ./
-COPY tailwind.config.ts ./
-COPY tsconfig.json ./
-COPY postcss.config.mjs ./
-COPY eslint.config.mjs ./
+# アプリケーションのコードは docker-compose.yml の volumes でマウントされるため、
+# Dockerfile ではコピーしないのが、開発時のリアルタイム反映には適しています。
+# もし本番用のイメージ作成も兼ねる場合は、この COPY ステップが必要です。
+# 現在は開発用としてのみ考慮し、以下の COPY はコメントアウトします。
+# COPY src ./src
+# COPY public ./public
+# COPY next.config.mjs ./
+# COPY tailwind.config.ts ./
+# COPY tsconfig.json ./
+# COPY postcss.config.mjs ./
+# COPY eslint.config.mjs ./
 
 # ポートの公開 (Docker Composeでマッピングされる)
 EXPOSE 3000
+
+# ★★★★ ここにCMD命令を追加 ★★★★
+# コンテナ起動時にNext.js開発サーバーを起動
+CMD ["npm", "run", "dev"]

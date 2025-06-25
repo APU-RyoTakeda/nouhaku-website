@@ -2,27 +2,50 @@
 'use client'; // クライアントコンポーネントとしてマーク
 
 import { useState, useEffect } from 'react';
-import Hamburger from 'hamburger-react';
 import Link from 'next/link';
-// import Image from 'next/image'; // ヘッダーではImageコンポーネントは不要になるので削除またはコメントアウト
+import MenuBarIcon from '../common/MenuBarIcon'; // 新しいMenuBarIconコンポーネントをインポート
 
-const navItems = [
-  { name: 'ホーム', href: '/' },
-  { name: 'とまる', href: '/houses' },
-  { name: 'たべる', href: '/eat' },
-  { name: 'めぐる', href: '/explore' },
-  { name: 'アクセス', href: '/access' },
-  { name: 'お問い合わせ', href: '/contact' },
-  { name: '予約', href: '/booking' },
+// ナビゲーションアイテムの型定義
+export interface NavItem { // 他のファイルで使う可能性があるのでexport
+  name: string; // 表示名 (英語)
+  href: string; // リンク先
+}
+
+// ヘッダーコンポーネントのプロパティの型定義
+interface HeaderProps {
+  heroHeight: number; // HeroSectionの高さを受け取る
+}
+
+const navItems: NavItem[] = [
+  // メニュー項目を英語に変更し、'Home'は全画面メニューから除外
+  // { name: 'Home', href: '/' }, // 'Home'はオーバービューには表示しない
+  { name: 'Stay', href: '/houses' },
+  { name: 'Eat', href: '/eat' },
+  { name: 'Explore', href: '/explore' },
+  { name: 'Access', href: '/access' },
+  { name: 'Contact', href: '/contact' },
+  { name: 'Booking', href: '/booking' },
+  { name: 'Privacy Policy', href: '/privacy-policy' },
 ];
 
-export default function Header() {
-  const [isOpen, setOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+// SNSリンクの例（アイコンはFont Awesomeなどを想定）
+const snsLinks = [
+  { name: 'X (Twitter)', href: 'https://twitter.com/your_account', icon: 'M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.21 -6.878L4.928 21.75H1.61L9.843 12.06 1.956 2.25H5.41zm10.077 18.528l-1.644-1.815h-2.923l1.974-2.181l-3.328-3.666h-2.903l-1.996 2.2h-2.923l1.974-2.181l-3.328-3.666h-2.903l-1.996 2.2h-2.923l1.974-2.181l-3.328-3.666h-2.903l-1.996 2.2z' }, // X (旧Twitter) のSVGパス例
+  { name: 'Instagram', href: 'https://instagram.com/your_account', icon: 'M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm3.5 11.5c.828 0 1.5.672 1.5 1.5s-.672 1.5-1.5 1.5-1.5-.672-1.5-1.5.672-1.5 1.5-1.5zm-3-4c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3z' }, // InstagramのSVGパス例
+  { name: 'Facebook', href: 'https://facebook.com/your_page', icon: 'M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm2.25 7.5h-1.5c-.345 0-.75.305-.75.75v1.5h2.25l-.3 2.25h-1.95V20H9.75v-6.75H7.5V9.75h2.25V7.5c0-1.24 1.157-2.25 2.25-2.25h2.25v2.25z' }, // FacebookのSVGパス例
+];
+
+export default function Header({ heroHeight }: HeaderProps) {
+  const [isOpen, setOpen] = useState(false); // モバイルメニューの開閉状態
+  const [isScrolled, setIsScrolled] = useState(false); // スクロール状態
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) { // 50pxスクロールしたら変化
+      // heroHeightに基づいてスクロール状態を判定
+      // HeroSectionの終わりから約80px手前でヘッダーのスタイルを変更
+      // heroHeightがない場合はデフォルト値（例: 50px）を使用
+      const scrollThreshold = heroHeight !== undefined ? heroHeight - 80 : 50; 
+      if (window.scrollY > scrollThreshold) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -31,71 +54,74 @@ export default function Header() {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [heroHeight]); // heroHeightが変更されたらエフェクトを再実行
+
+  // メニュー開閉時にbodyのスクロールを制御
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'; // スクロール禁止
+    } else {
+      document.body.style.overflow = 'unset'; // スクロール許可
+    }
+    // コンポーネントのアンマウント時にも元に戻す
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
+  // メニュー項目をグループに分類 (英語名に更新)
+  // 'Home' は全画面メニューから除外
+  const mainNavItems = navItems.filter(item =>
+    ['Stay', 'Eat', 'Explore', 'Access'].includes(item.name)
+  );
+  const utilityNavItems = navItems.filter(item =>
+    ['Contact', 'Booking', 'Privacy Policy'].includes(item.name)
+  );
 
   return (
     <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-gray-900 bg-opacity-70 shadow-md py-2' : 'bg-transparent py-4' // スクロール時のスタイル
+      isScrolled ? 'bg-gray-900 bg-opacity-90 shadow-md py-2' : 'bg-transparent py-4' // スクロール時のスタイル
     }`}>
       <div className="container mx-auto flex justify-between items-center px-4">
-        {/* ロゴ部分をテキストに変更 */}
-        {/* ★変更点: -mt-2 だった箇所をより大きな数値に変更します。例: -mt-4, -mt-6, -mt-8 など */}
-        <Link href="/" className={`text-base font-bold transition-colors duration-300 ${
-           isScrolled ? 'text-gray-800' : 'text-gray-900'
-         } -ml-8 -mt-4`}> {/* <-- この数値を調整してください */}
-          {/* ここをヘッダーに表示したいテキストロゴに変更してください */}
+        {/* ロゴ部分 */}
+        <Link href="/" className={`text-2xl font-extrabold transition-colors duration-300 ${
+            isScrolled ? 'text-white' : 'text-gray-900' // スクロールに応じて色を変更
+          }`}>
+          {/* ここにヘッダーに表示したいテキストロゴを入力してください */}
+          YOUR LOGO
         </Link>
 
-        {/* デスクトップナビゲーション */}
-        <nav className="hidden md:block">
-          <ul className="flex space-x-6">
-            {navItems.map((item) => (
-              <li key={item.name}>
-                <Link href={item.href} className={`text-lg font-medium hover:text-green-600 transition-colors ${
-                  isScrolled ? 'text-white' : 'text-gray-900'
-                }`}>
-                  {item.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        {/* モバイルメニューアイコン */}
-        <div className="md:hidden">
-          <Hamburger
-            toggled={isOpen}
-            toggle={setOpen}
-            color={isScrolled ? "#FFFFFF" : "#4B5563"}
-            direction="right"
-            size={28}
-          />
-        </div>
+        {/* MenuBarIconコンポーネントを配置 */}
+        <MenuBarIcon toggled={isOpen} toggle={setOpen} isScrolled={isScrolled} />
       </div>
 
-      {/* モバイルメニュー本体 */}
-      {isOpen && ( // isOpenがtrueのときのみ表示
-        <>
-          {/* モバイルメニューの背景オーバーレイ */}
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
-            onClick={() => setOpen(false)} // オーバーレイクリックで閉じる
-          ></div>
-          {/* モバイルメニューコンテンツ */}
-          <div className={`
-            md:hidden fixed top-0 right-0 h-full w-64 bg-white shadow-lg py-6 z-50
-            transition-transform duration-300
-            ${isOpen ? 'translate-x-0' : 'translate-x-full'}
-            pt-20
-          `}>
-            <nav>
-              <ul className="flex flex-col items-center space-y-5">
-                {navItems.map((item) => (
+      {/* モバイルメニュー本体 (全画面オーバーレイ) */}
+      {isOpen && (
+        <div className={`
+          fixed inset-0 bg-black bg-opacity-90 flex flex-col items-center justify-center z-40
+          animate-fade-in-scale
+        `}>
+          {/* 閉じるボタン (X印) */}
+          <button
+            onClick={() => setOpen(false)} // クリックでメニューを閉じる
+            className="absolute top-4 right-4 text-white text-5xl p-2 z-50 hover:text-green-400 transition-colors duration-200"
+            aria-label="Close menu" // aria-labelも英語に
+          >
+            &times;
+          </button>
+
+          {/* メニュー項目を囲む中央寄せされたコンテナ */}
+          <div className="w-full max-w-xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-left">
+            {/* 主要なナビゲーション項目グループ */}
+            <nav className="mb-10"> {/* 下のグループとの間に大きな余白 */}
+              <ul className="flex flex-col space-y-6"> {/* 縦並び、項目間の余白 */}
+                {mainNavItems.map((item) => (
                   <li key={item.name}>
                     <Link
                       href={item.href}
                       onClick={() => setOpen(false)}
-                      className="text-gray-800 text-xl font-semibold hover:text-green-600 transition-colors block py-2 px-4 w-full text-center"
+                      // Hina Minchoフォントを適用、太字は削除
+                      className={`block py-2 px-0 text-white hover:text-green-400 transition-colors duration-200 text-6xl font-bold`}
                     >
                       {item.name}
                     </Link>
@@ -103,8 +129,49 @@ export default function Header() {
                 ))}
               </ul>
             </nav>
+
+            {/* その他のユーティリティ項目グループ（上に線） */}
+            <nav className="border-t-2 border-white pt-6 mb-10"> {/* 上に線、上にパディング、下に余白 */}
+              <ul className="flex flex-col space-y-4"> {/* 縦並び、項目間の余白 */}
+                {utilityNavItems.map((item) => (
+                  <li key={item.name}>
+                    <Link
+                      href={item.href}
+                      onClick={() => setOpen(false)}
+                      // Hina Minchoフォントを適用
+                      className="block py-2 px-0 text-white hover:text-green-400 transition-colors duration-200 text-4xl"
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            {/* SNSリンクグループ（上に線） */}
+            <nav className="border-t-2 border-white pt-6"> {/* 上に線、上にパディング */}
+              <ul className="flex flex-row space-x-6 justify-start items-center"> {/* 横並び、項目間の余白、左揃え */}
+                {snsLinks.map((link) => (
+                  <li key={link.name}>
+                    <a
+                      href={link.href}
+                      target="_blank" // 新しいタブで開く
+                      rel="noopener noreferrer" // セキュリティ対策
+                      onClick={() => setOpen(false)}
+                      className="block text-white hover:text-green-400 transition-colors duration-200"
+                      aria-label={link.name}
+                    >
+                      {/* SVGアイコンをここに埋め込む */}
+                      <svg className="w-8 h-8 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d={link.icon}></path>
+                      </svg>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           </div>
-        </>
+        </div>
       )}
     </header>
   );

@@ -32,7 +32,7 @@ const navItems: NavItem[] = [
 // SNSリンクの定義を更新 - SVGパスの代わりに画像ファイルへのパスを使用
 const snsLinks = [
   { name: 'X (Twitter)', href: 'https://twitter.com/your_account', iconPath: '/images/icon/x.svg' },
-  { name: 'Instagram', href: 'https://instagram.com/your_account', iconPath: '/images/icon/instagram.svg' },
+  { name: 'Instagram', href: 'https://www.instagram.com/fujisatogenki_akita/', iconPath: '/images/icon/instagram.svg' },
   { name: 'Facebook', href: 'https://facebook.com/your_page', iconPath: '/images/icon/facebook.svg' },
 ];
 
@@ -44,8 +44,12 @@ export default function Header({ heroHeight }: HeaderProps) {
     const handleScroll = () => {
       // heroHeightに基づいてスクロール状態を判定
       // HeroSectionの終わりから約80px手前でヘッダーのスタイルを変更
-      // heroHeightがない場合はデフォルト値（例: 50px）を使用
-      const scrollThreshold = heroHeight !== undefined ? heroHeight - 80 : 50;
+      // この値を小さくすることで、より早くヘッダーのスタイルが変更される
+      // 例: HeroSectionの高さの半分で変更を開始する
+      const scrollThreshold = heroHeight !== undefined ? heroHeight * 0.5 : 50; // ここを調整！
+      // もしくは、固定値で調整したい場合 (例: 画面上部から100pxスクロールしたら変化)
+      // const scrollThreshold = 100;
+
       if (window.scrollY > scrollThreshold) {
         setIsScrolled(true);
       } else {
@@ -81,7 +85,7 @@ export default function Header({ heroHeight }: HeaderProps) {
 
   return (
     <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-gray-900 bg-opacity-90 shadow-md py-2' : 'bg-transparent py-4' // スクロール時のスタイル
+      isScrolled ? 'bg-stone-800 bg-opacity-90 shadow-md py-2' : 'bg-transparent py-4' // スクロール時のスタイル
     }`}>
       <div className="container mx-auto flex justify-between items-center px-4">
         {/* ロゴ部分 */}

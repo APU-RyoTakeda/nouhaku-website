@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image'; // Imageコンポーネントをインポート
 import MenuBarIcon from '../common/MenuBarIcon'; // 新しいMenuBarIconコンポーネントをインポート
 
 // ナビゲーションアイテムの型定義
@@ -28,11 +29,11 @@ const navItems: NavItem[] = [
   { name: 'Privacy Policy', href: '/privacy-policy' },
 ];
 
-// SNSリンクの例（アイコンはFont Awesomeなどを想定）
+// SNSリンクの定義を更新 - SVGパスの代わりに画像ファイルへのパスを使用
 const snsLinks = [
-  { name: 'X (Twitter)', href: 'https://twitter.com/your_account', icon: 'M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.21 -6.878L4.928 21.75H1.61L9.843 12.06 1.956 2.25H5.41zm10.077 18.528l-1.644-1.815h-2.923l1.974-2.181l-3.328-3.666h-2.903l-1.996 2.2h-2.923l1.974-2.181l-3.328-3.666h-2.903l-1.996 2.2h-2.923l1.974-2.181l-3.328-3.666h-2.903l-1.996 2.2z' }, // X (旧Twitter) のSVGパス例
-  { name: 'Instagram', href: 'https://instagram.com/your_account', icon: 'M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm3.5 11.5c.828 0 1.5.672 1.5 1.5s-.672 1.5-1.5 1.5-1.5-.672-1.5-1.5.672-1.5 1.5-1.5zm-3-4c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3z' }, // InstagramのSVGパス例
-  { name: 'Facebook', href: 'https://facebook.com/your_page', icon: 'M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm2.25 7.5h-1.5c-.345 0-.75.305-.75.75v1.5h2.25l-.3 2.25h-1.95V20H9.75v-6.75H7.5V9.75h2.25V7.5c0-1.24 1.157-2.25 2.25-2.25h2.25v2.25z' }, // FacebookのSVGパス例
+  { name: 'X (Twitter)', href: 'https://twitter.com/your_account', iconPath: '/images/icon/x.svg' },
+  { name: 'Instagram', href: 'https://instagram.com/your_account', iconPath: '/images/icon/instagram.svg' },
+  { name: 'Facebook', href: 'https://facebook.com/your_page', iconPath: '/images/icon/facebook.svg' },
 ];
 
 export default function Header({ heroHeight }: HeaderProps) {
@@ -44,7 +45,7 @@ export default function Header({ heroHeight }: HeaderProps) {
       // heroHeightに基づいてスクロール状態を判定
       // HeroSectionの終わりから約80px手前でヘッダーのスタイルを変更
       // heroHeightがない場合はデフォルト値（例: 50px）を使用
-      const scrollThreshold = heroHeight !== undefined ? heroHeight - 80 : 50; 
+      const scrollThreshold = heroHeight !== undefined ? heroHeight - 80 : 50;
       if (window.scrollY > scrollThreshold) {
         setIsScrolled(true);
       } else {
@@ -161,10 +162,14 @@ export default function Header({ heroHeight }: HeaderProps) {
                       className="block text-white hover:text-green-400 transition-colors duration-200"
                       aria-label={link.name}
                     >
-                      {/* SVGアイコンをここに埋め込む */}
-                      <svg className="w-8 h-8 fill-current" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d={link.icon}></path>
-                      </svg>
+                      {/* next/image コンポーネントを使用 */}
+                      <Image
+                        src={link.iconPath} // iconをiconPathに変更
+                        alt={link.name}
+                        width={32} // アイコンの適切な幅を指定
+                        height={32} // アイコンの適切な高さを指定
+                        className="filter brightness-0 invert" // 白いアイコンにするためのCSS (元のSVGが黒の場合)
+                      />
                     </a>
                   </li>
                 ))}

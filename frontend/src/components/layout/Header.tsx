@@ -87,10 +87,8 @@ export default function Header({ heroHeight }: HeaderProps) {
       isScrolled ? 'bg-stone-800 bg-opacity-90 shadow-md py-2' : 'bg-transparent py-4' // スクロール時のスタイル
     }`}>
       <div className="container mx-auto flex justify-between items-center px-4">
-        {/* ロゴ部分 */}
-        <Link href="/" className={`text-2xl font-extrabold transition-colors duration-300 ${
-            isScrolled ? 'text-white' : 'text-gray-900' // スクロールに応じて色を変更
-          }`}>
+        {/* ロゴ部分: 常に白にします */}
+        <Link href="/" className={`text-2xl font-extrabold transition-colors duration-300 text-white`}>
           {/* ここにヘッダーに表示したいテキストロゴを入力してください */}
           YOUR LOGO
         </Link>
@@ -102,8 +100,10 @@ export default function Header({ heroHeight }: HeaderProps) {
       {/* モバイルメニュー本体 (全画面オーバーレイ) */}
       {isOpen && (
         <div className={`
-          fixed inset-0 bg-black bg-opacity-90 flex flex-col items-center justify-center z-40
+          fixed inset-0 bg-black bg-opacity-90 flex flex-col items-center /* justify-center を削除 */ z-40
           animate-fade-in-scale
+          overflow-y-auto /* コンテンツが収まらない場合にスクロール可能にする */
+          py-4   /* ★ py-8 を py-4 に変更: オーバーレイ自体の上下パディングをさらに削減 ★ */
         `}>
           {/* 閉じるボタン (X印) */}
           <button
@@ -115,17 +115,16 @@ export default function Header({ heroHeight }: HeaderProps) {
           </button>
 
           {/* メニュー項目を囲む中央寄せされたコンテナ */}
-          <div className="w-full max-w-xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-left">
+          <div className="w-full max-w-xl mx-auto px-4 sm:px-6 lg:px-8 py-4 text-left"> {/* ★ py-8 を py-4 に変更: 内側のコンテンツコンテナの上下パディングを削減 ★ */}
             {/* 主要なナビゲーション項目グループ */}
-            <nav className="mb-10"> {/* 下のグループとの間に大きな余白 */}
-              <ul className="flex flex-col space-y-6"> {/* 縦並び、項目間の余白 */}
+            <nav className="mb-4"> {/* ★ mb-6 を mb-4 に変更: グループ間のマージンを削減 ★ */}
+              <ul className="flex flex-col space-y-3"> {/* ★ space-y-4 を space-y-3 に変更: 項目の縦間隔を削減 ★ */}
                 {mainNavItems.map((item) => (
                   <li key={item.name}>
                     <Link
                       href={item.href}
                       onClick={() => setOpen(false)}
-                      // Hina Minchoフォントを適用、太字は削除
-                      className={`block py-2 px-0 text-white hover:text-green-400 transition-colors duration-200 text-6xl font-bold`}
+                      className={`block w-full py-1 px-0 text-white hover:text-green-400 transition-colors duration-200 text-4xl font-bold`}
                     >
                       {item.name}
                     </Link>
@@ -135,15 +134,14 @@ export default function Header({ heroHeight }: HeaderProps) {
             </nav>
 
             {/* その他のユーティリティ項目グループ（上に線） */}
-            <nav className="border-t-2 border-white pt-6 mb-10"> {/* 上に線、上にパディング、下に余白 */}
-              <ul className="flex flex-col space-y-4"> {/* 縦並び、項目間の余白 */}
+            <nav className="border-t-2 border-white pt-3 mb-4"> {/* ★ pt-4 を pt-3 に, mb-6 を mb-4 に変更 ★ */}
+              <ul className="flex flex-col space-y-1"> {/* ★ space-y-2 を space-y-1 に変更 ★ */}
                 {utilityNavItems.map((item) => (
                   <li key={item.name}>
                     <Link
                       href={item.href}
                       onClick={() => setOpen(false)}
-                      // Hina Minchoフォントを適用
-                      className="block py-2 px-0 text-white hover:text-green-400 transition-colors duration-200 text-4xl"
+                      className="block w-full py-1 px-0 text-white hover:text-green-400 transition-colors duration-200 text-2xl"
                     >
                       {item.name}
                     </Link>
@@ -153,8 +151,8 @@ export default function Header({ heroHeight }: HeaderProps) {
             </nav>
 
             {/* SNSリンクグループ（上に線） */}
-            <nav className="border-t-2 border-white pt-6"> {/* 上に線、上にパディング */}
-              <ul className="flex flex-row space-x-6 justify-start items-center"> {/* 横並び、項目間の余白、左揃え */}
+            <nav className="border-t-2 border-white pt-3"> {/* ★ pt-4 を pt-3 に変更 ★ */}
+              <ul className="flex flex-row space-x-3 justify-start items-center"> {/* ★ space-x-4 を space-x-3 に変更 ★ */}
                 {snsLinks.map((link) => (
                   <li key={link.name}>
                     <a
@@ -181,23 +179,15 @@ export default function Header({ heroHeight }: HeaderProps) {
           </div>
 
           {/* --- hujisato.svg をモバイルメニューの左下に配置 --- */}
-          {/* bottom と left の値をさらに大きくし、画像を画面の端に近づける */}
-          <div className="absolute bottom-2 left-2 px-2 pb-4"> {/* ★ bottom と left を 16 に変更 ★ */}
+          {/* PC以外のデバイスでは非表示にするためのクラスを追加 */}
+          <div className="absolute bottom-8 left-8 p-4 z-[-10] hidden lg:block">
             <Image
               src="/images/general/hujisato.svg"
               alt="hujisato logo"
-              // SVGの元々の縦横比と、希望の最大サイズに合わせて調整してください。
-              // 例: 元のSVGが幅500px、高さ125px (4:1) の場合
-              width={500}   // Next.jsのImageコンポーネントが内部で利用する基盤の幅
-              height={125}  // Next.jsのImageコンポーネントが内部で利用する基盤の高さ
-              // max-w の値を画面幅いっぱい近くまで大きくする (例: 90vw や 600px など)
-              className="w-full max-w-[600px] h-auto object-contain" // ★ max-w を 600px に変更 ★
-              // w-full: 親要素の利用可能な幅いっぱいに広げる
-              // max-w-[600px]: 最大幅を600pxに制限 (大きな画面でもロゴが大きくなりすぎないように)
-              // h-auto: 幅に合わせて高さを自動調整し、縦横比を維持
-              // object-contain: コンテナ内にSVG全体が収まるようにスケーリング
-
-              // 必要であれば、SVGの色を反転させる (元のSVGが黒で、背景が黒の場合など)
+              width={500}
+              height={125}
+              className="w-full max-w-[min(calc(100vw-64px),_320px)] h-auto object-contain"
+              // 必要であれば、SVGの色を反転させる
               // className="filter invert"
             />
           </div>

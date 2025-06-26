@@ -1,4 +1,3 @@
-// frontend/src/components/layout/Header.tsx
 'use client'; // クライアントコンポーネントとしてマーク
 
 import { useState, useEffect } from 'react';
@@ -180,6 +179,30 @@ export default function Header({ heroHeight }: HeaderProps) {
               </ul>
             </nav>
           </div>
+
+          {/* --- hujisato.svg をモバイルメニューの左下に配置 --- */}
+          {/* bottom と left の値をさらに大きくし、画像を画面の端に近づける */}
+          <div className="absolute bottom-2 left-2 px-2 pb-4"> {/* ★ bottom と left を 16 に変更 ★ */}
+            <Image
+              src="/images/general/hujisato.svg"
+              alt="hujisato logo"
+              // SVGの元々の縦横比と、希望の最大サイズに合わせて調整してください。
+              // 例: 元のSVGが幅500px、高さ125px (4:1) の場合
+              width={500}   // Next.jsのImageコンポーネントが内部で利用する基盤の幅
+              height={125}  // Next.jsのImageコンポーネントが内部で利用する基盤の高さ
+              // max-w の値を画面幅いっぱい近くまで大きくする (例: 90vw や 600px など)
+              className="w-full max-w-[600px] h-auto object-contain" // ★ max-w を 600px に変更 ★
+              // w-full: 親要素の利用可能な幅いっぱいに広げる
+              // max-w-[600px]: 最大幅を600pxに制限 (大きな画面でもロゴが大きくなりすぎないように)
+              // h-auto: 幅に合わせて高さを自動調整し、縦横比を維持
+              // object-contain: コンテナ内にSVG全体が収まるようにスケーリング
+
+              // 必要であれば、SVGの色を反転させる (元のSVGが黒で、背景が黒の場合など)
+              // className="filter invert"
+            />
+          </div>
+          {/* ------------------------------------------- */}
+
         </div>
       )}
     </header>

@@ -1,50 +1,60 @@
 // frontend/src/components/sections/PhraseSection.tsx
-'use client'; // このコンポーネントがクライアントサイドで実行されることを示す
+import HeroSlider from '@/components/common/HeroSlider'; // このコンポーネントは現在使用されていませんが、インポートは残しています
+import Image from 'next/image'; // Imageコンポーネントは引き続き必要
 
-import React from 'react';
+export default function PhraseSection() { // ★コンポーネント名をPhraseSectionに修正
+  // heroImagesはHeroSliderを使用しないため、このデータは現在使用されていません
+  const heroImages = [
+    { src: '/images/hero/buna.png', alt: 'ブナ' },
+    { src: '/images/hero/hero-2.png', alt: '伝統的な農家の暮らし' },
+    { src: '/images/hero/hero-3.png', alt: '豊かな自然と人々の笑顔' },
+  ];
 
-export default function PhraseSection() {
   return (
-    <section className="bg-white py-16 sm:py-20 -mt-8 relative z-10 rounded-t-xl shadow-lg">
-      <div className="container mx-auto px-4 max-w-6xl text-center">
-        {/* ★変更点: 全体をFlexboxで囲み、横並びに配置（justify-betweenで両端寄せ） */}
-        {/* md:flex-rowで中サイズ以上で横並び、items-startで上揃え */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:space-x-8 lg:space-x-12 relative z-0">
+    // sectionタグにbg-whiteを追加し、背景画像とオーバーレイを削除
+    <section className="relative w-full h-screen flex items-center justify-center bg-white overflow-hidden text-gray-800"> {/* ★bg-whiteを追加、text-whiteを削除しtext-gray-800に */}
+      {/* 背景の単一画像とオーバーレイを削除 */}
+      {/*
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/images/hero/town_1.png"
+          alt="秋田県藤里町の風景"
+          fill
+          style={{ objectFit: 'cover' }}
+          priority
+          sizes="100vw"
+          className="image-filter"
+        />
+        <div className="absolute inset-0 bg-black opacity-60"></div>
+      </div>
+      */}
 
-          {/* 左側の説明文（横書き） */}
-          {/* md:order-1で中サイズ以上で左に配置 */}
-          {/* text-centerはpタグに移して、div自体はjustify-centerを維持 */}
-          <div className="flex justify-center w-full md:w-1/2 md:order-1 relative z-10">
-            <p className="text-xl sm:text-2xl text-gray-700 max-w-prose
-                        leading-relaxed
-                        md:px-4 py-4 text-center"> {/* Pタグ自体を中央寄せ */}
-              秋田県由利本荘市で、都会の喧騒を忘れ、里山の恵みと伝統文化に触れる体験を。
-              <br />
-              心と体が癒される、特別な時間をお過ごしください。
-            </p>
-          </div>
+      {/* 中央のコンテンツ（キャッチコピーと説明文）をまとめるコンテナ */}
+      {/* 背景が白になるため、文字色をtext-gray-800に調整します */}
+      <div className="relative z-10 flex flex-col items-center justify-center h-full w-full px-4">
+        {/* 中央に表示するロゴ画像（コメントアウトの状態を維持） */}
+        {/*
+        <div className="mb-8">
+          <Image
+            src="/images/general/jnouhaku_logo.png"
+            alt="農泊ロゴ"
+            width={150}
+            height={38}
+            priority
+          />
+        </div>
+        */}
 
-          {/* 右側のキャッチコピー（縦書き） */}
-          {/* md:order-2で中サイズ以上で右に配置 */}
-          {/* absoluteを削除し、Flexアイテムとして配置する */}
-          <div className="flex justify-end w-full md:w-1/2 md:order-2"> {/* justify-end で右寄せ */}
-            <h2 className="text-2xl sm:text-3xl text-blue-800 leading-tight
-                        [writing-mode:vertical-rl] [text-orientation:upright] {/* 縦書きのスタイル */}
-                        h-auto                   /* 高さを内容に合わせる */
-                        max-height-[400px]       /* 縦書きの行の最大長さを設定 */
-                        min-height-[200px]       /* 縦書きの行の最小長さを設定 */
-                        max-width-[80px]         /* 縦書きの「行数」に相当する幅を増やす */
-                        min-width-[40px]         /* 縦書きの「行数」の最小幅を設定 */
-                        tracking-widest          /* 文字間隔 */
-                        py-2 text-right          /* ★変更: 縦書きの文字の並びを右寄せに */
-                        overflow-hidden          /* はみ出しを隠す */
-                        break-words              /* 単語の途中での改行を許可 */
-                        ">
-              豊かな自然と、温かい人々の笑顔に出会う旅
-            </h2>
-          </div>
+        {/* キャッチコピー */}
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-center drop-shadow-lg leading-tight">
+          秋田・藤里。<br />おかえり、第二のふるさとへ。
+        </h2>
 
-        </div> {/* .flex コンテナの閉じタグ */}
+        {/* 説明文を挿入します */}
+        <p className="text-lg sm:text-xl md:text-2xl mb-8 text-center drop-shadow-lg max-w-2xl mx-auto leading-relaxed">
+          秋田県藤里町は、世界遺産・白神山地のふもとに広がる、豊かな自然と温かい人情が息づく場所です。当農泊サービスでは、都会の喧騒から離れ、“時間にとらわれない暮らし”を体験いただけます。
+          早朝の鳥のさえずりから始まり、農家さんと共に旬の野菜を収穫し、囲炉裏端で郷土料理を味わう。白神山地のブナ林を散策し、夜には満天の星空を眺める。ここでは、五感を研ぎ澄まし、自然の恵みと人との温かい交流を通じて、心のふるさとを見つける特別なひとときが待っています。疲れた心身を癒し、新たな自分を発見する旅へ、ぜひお越しください。
+        </p>
       </div>
     </section>
   );

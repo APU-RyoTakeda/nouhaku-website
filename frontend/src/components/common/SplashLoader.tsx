@@ -1,5 +1,5 @@
 // frontend/src/components/common/SplashLoader.tsx
-'use client';
+'use client'; // クライアントコンポーネントとしてマーク
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
@@ -38,10 +38,10 @@ export default function SplashLoader({ onAnimationEnd }: SplashLoaderProps) {
     `}>
       {/* 画像ロゴを表示 */}
       <Image
-        src="/images/general/top_logo.png" // ★ここを修正しました: top_logo.png
-        alt="藤里" // ロゴの代替テキスト
-        width={150}
-        height={37}
+        src="/images/general/top_logo_toumei.png" // ★ここを修正
+        alt="Fujisato ロゴ" // ★altテキストを修正
+        width={300} // 画像の幅を調整（例として300px）
+        height={150} // 画像の高さを調整（例として150px、アスペクト比に合わせて）
         priority
       />
     </div>

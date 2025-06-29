@@ -4,11 +4,14 @@
 import { useState } from 'react'; 
 import Header from '../components/layout/Header'; 
 import HeroSection from '../components/sections/HeroSection'; 
-import FeaturesSection from '../components/sections/FeaturesSection'; 
+// FeaturesSection はもう使わないのでインポートから削除します
+// import FeaturesSection from '../components/sections/FeaturesSection'; 
 import PhraseSection from '../components/sections/PhraseSection'; 
 import SplashLoader from '@/components/common/SplashLoader'; 
 import HouseSpotlightSection from '@/components/sections/HouseSpotlightSection';
-import TownSpotlightSection from '@/components/sections/TownSpotlightSection';
+import TownSpotlightSection from '../components/sections/TownSpotlightSection';
+// 新しい FeaturesImageTextSection をインポートします
+import FeaturesImageTextSection from '../components/sections/FeaturesImageTextSection'; 
 
 
 export default function Home() {
@@ -28,16 +31,15 @@ export default function Home() {
           {/* HeaderコンポーネントはheroSectionHeightForHeaderを使ってスクロール制御 */}
           <Header heroHeight={heroSectionHeightForHeader} /> 
 
-          {/* ★★★ここを修正します★★★ */}
           {/* HeroSection をそのまま呼び出す。高さの指定は HeroSection.tsx 内で行うので、
-             外側で高さ (h-[800px]) を持つ div で囲む必要はありません。 */}
+              外側で高さ (h-[800px]) を持つ div で囲む必要はありません。 */}
           <HeroSection /> 
-          {/* ★★★修正ここまで★★★ */}
-
+          
           <PhraseSection />
 
+          {/* FeaturesSection の代わりに FeaturesImageTextSection コンポーネントを配置します */}
           <div className="mt-16"> 
-            <FeaturesSection /> 
+            <FeaturesImageTextSection /> 
           </div>
 
           <HouseSpotlightSection />

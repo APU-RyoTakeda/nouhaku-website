@@ -2,49 +2,50 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+// 必要であれば react-icons からインポートすることもできます
+// import { FaArrowRight } from 'react-icons/fa'; // 例
 
-// FeatureCardProps 型を定義
 interface FeatureCardProps {
-  icon: string; // 絵文字も画像パスも文字列なのでstring型
+  icon: string;
   title: string;
   description: string;
   link: string;
-  cardBgClass?: string; // 背景色クラス (オプション)
+  cardBgClass?: string;
 }
 
 export default function FeatureCard({ icon, title, description, link, cardBgClass }: FeatureCardProps) {
-  // iconが画像のパスであるか絵文字であるかを判別
   const isImage = typeof icon === 'string' && icon.startsWith('/');
-
-  // cardBgClass が指定されていればそれを使用し、なければデフォルトで bg-white を使用
   const bgColor = cardBgClass || 'bg-white';
 
   return (
     <Link
       href={link}
-      // Tailwind CSSのクラスを結合するためにテンプレートリテラルを使用
-      className={`block rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-6 text-center ${bgColor}`}
+      className={`relative block rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-6 text-center ${bgColor} flex flex-col justify-between items-center`} // 親要素をflex-colにして下揃えに調整
     >
-      <div className="flex items-center justify-center mb-4">
+      <div className="flex flex-col items-center justify-center mb-4 flex-grow"> {/* flex-grow でコンテンツ部分が広がるように */}
         {isImage ? (
-          // Next.jsのImageコンポーネントを使用する例
-          // widthとheight、およびclassNameでサイズを調整
           <Image
             src={icon}
             alt={title}
-            width={80} // アイコンサイズを大きく
-            height={80} // アイコンサイズを大きく
-            className="w-20 h-20 object-contain" // Tailwind CSSでサイズを調整
+            width={80}
+            height={80}
+            className="w-20 h-20 object-contain"
           />
         ) : (
-          // 絵文字の場合
-          <span className="text-6xl" role="img" aria-label={title}> {/* 絵文字サイズを大きく */}
+          <span className="text-6xl" role="img" aria-label={title}>
             {icon}
           </span>
         )}
+        <h3 className="text-xl font-semibold text-gray-800 mt-4 mb-2">{title}</h3> {/* アイコンとタイトルの間にマージンを追加 */}
+        <p className="text-gray-600 text-sm mb-4">{description}</p> {/* 矢印との間にマージンを追加 */}
       </div>
-      <h3 className="text-xl font-semibold text-gray-800 mb-2">{title}</h3>
-      <p className="text-gray-600 text-sm">{description}</p>
+
+      {/* ★★★ このdivが矢印アイコンのコンテナです ★★★ */}
+      <div className="absolute bottom-4 right-6 text-2xl text-gray-700 group-hover:translate-x-1 transition-transform duration-200">
+        → {/* シンプルな右矢印（→） */}
+        {/* もし react-icons を使うなら: */}
+        {/* <FaArrowRight /> */}
+      </div>
     </Link>
   );
 }

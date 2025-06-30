@@ -1,17 +1,15 @@
-// frontend/src/app/page.tsx
 'use client'; 
 
 import { useState } from 'react'; 
 import Header from '../components/layout/Header'; 
 import HeroSection from '../components/sections/HeroSection'; 
-// FeaturesSection はもう使わないのでインポートから削除します
-// import FeaturesSection from '../components/sections/FeaturesSection'; 
 import PhraseSection from '../components/sections/PhraseSection'; 
 import SplashLoader from '@/components/common/SplashLoader'; 
 import HouseSpotlightSection from '@/components/sections/HouseSpotlightSection';
 import TownSpotlightSection from '../components/sections/TownSpotlightSection';
-// 新しい FeaturesImageTextSection をインポートします
 import FeaturesImageTextSection from '../components/sections/FeaturesImageTextSection'; 
+// ★新しく追加するコンポーネントをインポートします★
+import FixedBookingButton from '../components/common/FixedBookingButton'; 
 
 
 export default function Home() {
@@ -44,6 +42,9 @@ export default function Home() {
 
           <HouseSpotlightSection />
           <TownSpotlightSection />
+          
+          {/* ★画面右下に常に表示される予約ボタンを配置します★ */}
+          <FixedBookingButton />
         </>
       )} 
     </>

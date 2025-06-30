@@ -1,3 +1,8 @@
+/* frontend/src/app/globals.css */
+
+/* ★★★ ここに沢庵明朝の@importを追加 ★★★ */
+@import url('https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -33,7 +38,7 @@ body {
   scroll-padding-top: 6rem; /* 固定ヘッダー分のスクロール位置調整 */
 }
 
-/* ★★★ ここからが、特に重要で欠けていた部分です ★★★ */
+/* ★★★ ここからが、特に重要で欠けていなかった部分です ★★★ */
 /* HeroSliderでSwiperを使用する際に、height: 100%が効くように親要素も調整 */
 html, body, #__next, .swiper, .swiper-slide {
   height: 100%;
@@ -57,5 +62,28 @@ html, body, #__next, .swiper, .swiper-slide {
 
 /* HeroSection内の画像に適用するフィルター (必要であれば) */
 .image-filter {
-  /* filter: brightness(0.6);  ← この行を完全に削除またはコメントアウトしてください */
+  /* filter: brightness(0.6);  ← この行を完全に削除またはコメントアウトしてください */
 }
+
+/* ★★★ 沢庵明朝を適用するためのカスタムクラス ★★★ */
+.font-sawarabi {
+  font-family: 'Sawarabi Mincho', serif;
+}
+
+/* frontend/src/app/globals.css */
+
+/* ★ファイルの最も上に追加★ */
+@import url('https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ... 既存のCSSコード ... */
+
+/* ★ファイルの最も下に追加★ */
+.font-sawarabi {
+  font-family: 'Sawarabi Mincho', serif;
+}
+
+

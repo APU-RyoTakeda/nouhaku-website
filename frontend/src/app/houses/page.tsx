@@ -1,7 +1,7 @@
 // frontend/src/app/houses/page.tsx
 import HouseCard from '@/components/cards/HouseCard';
 
-// 施設一覧用のダミーデータ（HouseSpotlightSectionと重複しますが、ここでは別のリストとして定義）
+// 施設一覧用のダミーデータ
 const dummyHouses = [
   {
     slug: 'aki-no-ie',
@@ -41,7 +41,7 @@ const dummyHouses = [
   },
   {
     slug: 'kome-no-sato',
-    imageUrl: '/images/houses/house-5.png', // 追加のダミー画像があれば
+    imageUrl: '/images/houses/house-5.png',
     imageAlt: '米の郷',
     title: '黄金の稲穂に囲まれる「米の郷」',
     location: '秋田県大潟村',
@@ -53,7 +53,7 @@ const dummyHouses = [
 
 export default function HousesPage() {
   return (
-    <div className="pt-24 pb-16 bg-gray-50 min-h-screen"> {/* Header分の余白と背景色 */}
+    <div className="pt-24 pb-16 bg-gray-50 min-h-screen">
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold text-center text-gray-800 mb-12">
           農泊施設一覧

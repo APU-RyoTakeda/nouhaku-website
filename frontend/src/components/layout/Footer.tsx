@@ -31,7 +31,7 @@ export default function Footer() {
  {/* ロゴ部分 */}
  <div className="mb-6">
  <Link href="/" className="text-3xl font-extrabold text-stone-100 hover:text-lime-400 transition-colors duration-200">
- YOUR LOGO
+ Hujisato
  </Link>
  </div>
 

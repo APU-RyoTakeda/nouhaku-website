@@ -2,8 +2,6 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-// 必要であれば react-icons からインポートすることもできます
-// import { FaArrowRight } from 'react-icons/fa'; // 例
 
 interface FeatureCardProps {
   icon: string;
@@ -20,31 +18,31 @@ export default function FeatureCard({ icon, title, description, link, cardBgClas
   return (
     <Link
       href={link}
-      className={`relative block rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-6 text-center ${bgColor} flex flex-col justify-between items-center`} // 親要素をflex-colにして下揃えに調整
+      className={`relative block w-80 h-80 rounded-full shadow-md hover:shadow-lg transition-shadow duration-300 p-4 text-center ${bgColor} flex flex-col justify-center items-center group`}
     >
-      <div className="flex flex-col items-center justify-center mb-4 flex-grow"> {/* flex-grow でコンテンツ部分が広がるように */}
+      <div className="flex flex-col items-center justify-center">
         {isImage ? (
           <Image
             src={icon}
             alt={title}
-            width={80}
-            height={80}
-            className="w-20 h-20 object-contain"
+            width={96} // ★ここを72から96に変更 (Next.js Imageのwidth)
+            height={96} // ★ここを72から96に変更 (Next.js Imageのheight)
+            className="w-24 h-24 object-contain mb-2" // ★ここをw-18 h-18からw-24 h-24に変更 (Tailwind CSS)
           />
         ) : (
-          <span className="text-6xl" role="img" aria-label={title}>
+          // 絵文字の場合 (現在は使用していませんが、念のため)
+          <span className="text-7xl mb-2" role="img" aria-label={title}> {/* text-5xlからtext-7xlに変更 */}
             {icon}
           </span>
         )}
-        <h3 className="text-xl font-semibold text-gray-800 mt-4 mb-2">{title}</h3> {/* アイコンとタイトルの間にマージンを追加 */}
-        <p className="text-gray-600 text-sm mb-4">{description}</p> {/* 矢印との間にマージンを追加 */}
-      </div>
-
-      {/* ★★★ このdivが矢印アイコンのコンテナです ★★★ */}
-      <div className="absolute bottom-4 right-6 text-2xl text-gray-700 group-hover:translate-x-1 transition-transform duration-200">
-        → {/* シンプルな右矢印（→） */}
-        {/* もし react-icons を使うなら: */}
-        {/* <FaArrowRight /> */}
+        <h3 className="text-xl font-semibold text-gray-800 mb-2 leading-tight">
+          {title}
+        </h3>
+        <p className="text-gray-600 text-xs leading-snug">
+          <span className="ml-1 font-bold text-blue-600 inline-block group-hover:translate-x-1 transition-transform duration-200">
+            more &rarr;
+          </span>
+        </p>
       </div>
     </Link>
   );

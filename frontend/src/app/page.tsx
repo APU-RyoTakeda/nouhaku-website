@@ -1,37 +1,50 @@
 // frontend/src/app/page.tsx
+<<<<<<< HEAD
 'use client'; // この行は必須です！
+=======
+'use client';
+>>>>>>> origin/main
 
-import { useState } from 'react'; 
-import Header from '../components/layout/Header'; 
-import HeroSection from '../components/sections/HeroSection'; 
-import FeaturesSection from '../components/sections/FeaturesSection'; 
-import PhraseSection from '../components/sections/PhraseSection'; 
-import SplashLoader from '@/components/common/SplashLoader'; 
+import { useState } from 'react';
+import Header from '../components/layout/Header';
+import HeroSection from '../components/sections/HeroSection';
+import PhraseSection from '../components/sections/PhraseSection'; // ここを修正しました: '../ ../' -> '../'
+import SplashLoader from '@/components/common/SplashLoader';
 import HouseSpotlightSection from '@/components/sections/HouseSpotlightSection';
-import TownSpotlightSection from '@/components/sections/TownSpotlightSection';
+import TownSpotlightSection from '../components/sections/TownSpotlightSection';
+import FeaturesImageTextSection from '../components/sections/FeaturesImageTextSection';
+// ★新しく追加するコンポーネントをインポートします★
+import FixedBookingButton from '../components/common/FixedBookingButton';
+// FeatureSection のインポートを追加
+import FeatureSection from '../components/sections/FeatureSection';
 
 
 export default function Home() {
-  const heroSectionHeightForHeader = 800; 
+  const heroSectionHeightForHeader = 800;
 
   const [showSplash, setShowSplash] = useState(true);
   const handleSplashEnd = () => { setShowSplash(false); };
 
   return (
     <>
-      {showSplash && <SplashLoader onAnimationEnd={handleSplashEnd} />} 
-      
-      {!showSplash && ( 
+      {showSplash && <SplashLoader onAnimationEnd={handleSplashEnd} />}
+
+      {!showSplash && (
         <>
-          <Header heroHeight={heroSectionHeightForHeader} /> 
-          <HeroSection /> 
+          <Header heroHeight={heroSectionHeightForHeader} />
+
+          <FixedBookingButton />
+          <HeroSection />
           <PhraseSection />
-          <div className="mt-16"> 
-            <FeaturesSection /> 
+          <FeatureSection /> {/* ここでコンポーネントが使用されています */}
+
+          <div className="mt-16">
+            <FeaturesImageTextSection />
           </div>
           <HouseSpotlightSection />
           <TownSpotlightSection />
 
+<<<<<<< HEAD
           <section className="py-20 text-center bg-white">
             <h2 className="text-3xl font-bold">トップページの主要コンテンツが揃いました！</h2>
             <p className="mt-4 text-gray-600">この後、必要に応じて問い合わせフォームや予約ページの実装に進みます。</p>
@@ -50,8 +63,10 @@ export default function Home() {
           >
             予約
           </a>
+=======
+>>>>>>> origin/main
         </>
-      )} 
+      )}
     </>
   );
 }

@@ -1,22 +1,16 @@
 // frontend/src/app/page.tsx
-<<<<<<< HEAD
-'use client'; // この行は必須です！
-=======
 'use client';
->>>>>>> origin/main
 
 import { useState } from 'react';
 import Header from '../components/layout/Header';
 import HeroSection from '../components/sections/HeroSection';
-import PhraseSection from '../components/sections/PhraseSection'; // ここを修正しました: '../ ../' -> '../'
+import PhraseSection from '../components/sections/PhraseSection';
 import SplashLoader from '@/components/common/SplashLoader';
-import HouseSpotlightSection from '@/components/sections/HouseSpotlightSection';
-import TownSpotlightSection from '../components/sections/TownSpotlightSection';
+// import HouseSpotlightSection from '@/components/sections/HouseSpotlightSection'; // ★削除
+// import TownSpotlightSection from '../components/sections/TownSpotlightSection'; // ★削除
 import FeaturesImageTextSection from '../components/sections/FeaturesImageTextSection';
-// ★新しく追加するコンポーネントをインポートします★
 import FixedBookingButton from '../components/common/FixedBookingButton';
-// FeatureSection のインポートを追加
-import FeatureSection from '../components/sections/FeatureSection';
+import FeaturesSection from '@/components/sections/FeatureSection';
 
 
 export default function Home() {
@@ -36,35 +30,13 @@ export default function Home() {
           <FixedBookingButton />
           <HeroSection />
           <PhraseSection />
-          <FeatureSection /> {/* ここでコンポーネントが使用されています */}
+          <FeaturesSection />
 
           <div className="mt-16">
             <FeaturesImageTextSection />
           </div>
-          <HouseSpotlightSection />
-          <TownSpotlightSection />
-
-<<<<<<< HEAD
-          <section className="py-20 text-center bg-white">
-            <h2 className="text-3xl font-bold">トップページの主要コンテンツが揃いました！</h2>
-            <p className="mt-4 text-gray-600">この後、必要に応じて問い合わせフォームや予約ページの実装に進みます。</p>
-          </section>
-
-          {/* ★★★ しずく型に戻し、水っぽいグラデーションと白文字に修正 ★★★ */}
-          <a
-            href="/reservation"
-            className="fixed bottom-8 right-8 z-50 text-white font-bold py-3 px-5 rounded-full shadow-md transition-colors duration-300 text-lg
-                       bg-gradient-to-br from-blue-300 to-blue-500 hover:from-blue-400 hover:to-blue-600" // 水っぽいグラデーションクラス
-            style={{
-              borderRadius: '50% 50% 25% 50%', // しずくの形
-              paddingTop: '0.8rem', // 縦長に調整
-              paddingBottom: '1.2rem',
-            }}
-          >
-            予約
-          </a>
-=======
->>>>>>> origin/main
+          {/* <HouseSpotlightSection /> */}{" "} {/* ★削除 */}
+          {/* <TownSpotlightSection /> */}{" "} {/* ★削除 */}
         </>
       )}
     </>

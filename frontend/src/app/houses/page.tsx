@@ -48,15 +48,7 @@ const dummyHouses = [
     description: '広大な田園地帯で、稲作体験も楽しめる農泊施設。収穫の喜びを共有できます。',
     price: '1泊 7,500円～',
   },
-{
-    slug: 'kome-no-sato',
-    imageUrl: '/images/houses/house-5.png',
-    imageAlt: '米の郷',
-    title: '黄金の稲穂に囲まれる「米の郷」',
-    location: '秋田県大潟村',
-    description: '広大な田園地帯で、稲作体験も楽しめる農泊施設。収穫の喜びを共有できます。',
-    price: '1泊 7,500円～',
-  },
+
 ];
 
 

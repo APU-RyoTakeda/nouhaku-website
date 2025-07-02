@@ -14,7 +14,6 @@ import FixedBookingButton from '../components/common/FixedBookingButton';
 // FeatureSection のインポートを追加
 import FeatureSection from '../components/sections/FeatureSection';
 
-
 export default function Home() {
   const heroSectionHeightForHeader = 800;
 

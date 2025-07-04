@@ -3,41 +3,72 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 // ダミーの施設詳細データ
-// 実際にはAPIから取得することになりますが、今回は簡易的にここに定義します。
 const dummyHouseDetails = {
-  'aki-no-ie': {
-    title: '里山の静けさに包まれる家「秋の家」',
-    location: '秋田県仙北市',
-    description: '築100年の古民家を改築した、懐かしくも新しい空間です。囲炉裏を囲んで語らう時間が楽しめ、里山の四季を五感で感じられます。縁側からは美しい庭園を眺められ、夜には満点の星空が広がります。地元の新鮮な食材を使った郷土料理体験も人気です。',
-    images: [
-      { src: '/images/house-details/aki-no-ie-1.png', alt: '秋の家 外観' },
-      { src: '/images/house-details/aki-no-ie-2.png', alt: '秋の家 囲炉裏' },
-      { src: '/images/house-details/aki-no-ie-3.png', alt: '秋の家 庭園' },
-    ],
-    price: '1泊 8,000円～',
-    capacity: '2～6名',
-    amenities: ['Wi-Fi', 'エアコン', 'キッチン', 'バス・トイレ別', '駐車場'],
-    activities: ['農業体験', '郷土料理作り', '星空観察', '散策'],
-  },
+  // --- 農家民宿 さんこの宿 ---
   'mori-no-ibuki': {
-    title: '渓流のせせらぎを聞く「森の息吹」',
-    location: '秋田県湯沢市',
-    description: '深い森の中に佇む隠れ家のような宿。窓からは美しい渓流と緑豊かな自然が広がり、日常の喧騒を忘れて心身をリフレッシュできます。周辺にはハイキングコースも整備されており、森林浴に最適です。',
+    title: '農家民宿 さんこの宿',
+    location: '秋田県藤里町',
+    description: '「みんなで食べるご飯は美味しい。」楽しい会話は最高のスパイス。暖かくて楽しいごはんをめしあがれ。',
     images: [
-      { src: '/images/house-details/mori-no-ibuki-1.png', alt: '森の息吹 外観' },
-      { src: '/images/house-details/mori-no-ibuki-2.png', alt: '森の息吹 リビング' },
+      { src: '/images/houses/sanko_1.png', alt: 'さんこの宿 外観' },
+      { src: '/images/houses/sanko_2.png', alt: 'さんこの宿 室内' },
+      { src: '/images/houses/sanko3.png', alt: 'さんこの宿 外観' }, 
     ],
-    price: '1泊 9,500円～',
-    capacity: '2～4名',
-    amenities: ['Wi-Fi', '暖炉', 'バス・トイレ一体', '駐車場'],
-    activities: ['森林浴', '渓流釣り', 'バードウォッチング'],
+    price: '1泊 9000円/1名(税込),暖房費別途500円/1人',
+    capacity: '1～4名',
+    access: '大館能代空港から車で約25分。秋田自動車道：二ツ井白神ICから22分。',
+    shuttle: '送迎あり',
+    bookingMethod: '事務局：NPO法人ふじさと元気塾',
+    phone: '0185-74-6102',
+    payment: '現金のみ（予約サイトはクレジットカード可）',
+    note: '冠婚葬祭等諸事情により、農家民宿を変更させて頂く場合もありますのでご了承下さい。',
+    relatedCouncil: 'ふじさと粕毛まちづくり協議会',
   },
-  // 他の施設の詳細データもここに追加できます
+  // --- 農家民宿 陶 ---
+  'umi-no-sato': {
+    title: '農家民宿 陶',
+    location: '秋田県藤里町',
+    description: '料理上手なお母さんの創作レシピや郷土料理をこだわりの器で提供。世界に二つとない素敵な宿。',
+    images: [
+      { src: '/images/houses/tou_1.png', alt: '陶 外観（日本海を望む）' },
+      { src: '/images/houses/tou_2.png', alt: '陶 食卓（海の幸）' },
+      { src: '/images/houses/tou_3.png', alt: '陶 室内' },
+    ],
+    price: '1泊 9000円/1名(税込),暖房費別途500円/1人',
+    capacity: '1～4名',
+    access: '大館能代空港から車で約25分。秋田自動車道：二ツ井白神ICから22分。',
+    shuttle: '送迎あり',
+    bookingMethod: '事務局：NPO法人ふじさと元気塾',
+    phone: '0185-74-6102',
+    payment: '現金のみ（予約サイトはクレジットカード可）',
+    note: '冠婚葬祭等諸事情により、農家民宿を変更させて頂く場合もありますのでご了承下さい。',
+    relatedCouncil: 'ふじさと粕毛まちづくり協議会',
+   },
+  // --- 農家民宿 ブナの森 ---
+  'yuki-no-sato': {
+    title: '農家民宿 ブナの森',
+    location: '秋田県藤里町',
+    description: '四季を感じられる眺めのよい部屋。お父さんとの会話は夜に飲むお酒の一番の肴。',
+    images: [
+      { src: '/images/houses/buna_1.png', alt: 'ブナの森 外観' },
+      { src: '/images/houses/buna_2.png', alt: 'ブナの森 冬景色' },
+      { src: '/images/houses/buna_3.png', alt: 'ブナの森 室内' },
+    ],
+   price: '1泊 9000円/1名(税込),暖房費別途500円/1人',
+    capacity: '1～4名',
+    access: '大館能代空港から車で約25分。秋田自動車道：二ツ井白神ICから22分。',
+    shuttle: '送迎あり',
+    bookingMethod: '事務局：NPO法人ふじさと元気塾',
+    phone: '0185-74-6102',
+    payment: '現金のみ（予約サイトはクレジットカード可）',
+    note: '冠婚葬祭等諸事情により、農家民宿を変更させて頂く場合もありますのでご了承下さい。',
+    relatedCouncil: 'ふじさと粕毛まちづくり協議会',
+  },
 };
 
 interface HouseDetailPageProps {
   params: {
-    slug: string; // URLから取得するスラッグ
+    slug: string;
   };
 }
 
@@ -46,7 +77,6 @@ export default async function HouseDetailPage({ params }: HouseDetailPageProps) 
   const house = dummyHouseDetails[slug as keyof typeof dummyHouseDetails];
 
   if (!house) {
-    // 該当する施設が見つからない場合の表示
     return (
       <div className="pt-24 pb-16 min-h-screen bg-gray-50 flex flex-col items-center justify-center text-center">
         <h1 className="text-3xl font-bold text-gray-800 mb-4">施設が見つかりません</h1>
@@ -74,7 +104,7 @@ export default async function HouseDetailPage({ params }: HouseDetailPageProps) 
           </h1>
           <p className="text-xl text-gray-600 mb-6">{house.location}</p>
 
-          {/* 画像ギャラリー（簡易版） */}
+          {/* 画像ギャラリー */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
             {house.images.map((img, index) => (
               <div key={index} className="relative w-full h-64 rounded-lg overflow-hidden">
@@ -96,32 +126,72 @@ export default async function HouseDetailPage({ params }: HouseDetailPageProps) 
                 {house.description}
               </p>
 
+              {/* 料金・定員 */}
               <h3 className="text-xl font-bold text-gray-800 mb-3">料金・定員</h3>
               <ul className="list-disc list-inside text-gray-700 mb-6">
                 <li>料金: {house.price}</li>
                 <li>定員: {house.capacity}</li>
               </ul>
 
-              <h3 className="text-xl font-bold text-gray-800 mb-3">設備</h3>
-              <ul className="list-disc list-inside text-gray-700 mb-6">
-                {house.amenities.map((amenity, index) => (
-                  <li key={index}>{amenity}</li>
-                ))}
-              </ul>
+             
 
-              <h3 className="text-xl font-bold text-gray-800 mb-3">体験アクティビティ</h3>
-              <ul className="list-disc list-inside text-gray-700 mb-6">
-                {house.activities.map((activity, index) => (
-                  <li key={index}>{activity}</li>
-                ))}
-              </ul>
+             
+              {/* 新しく追加する情報セクション */}
+              {house.access && (
+                <>
+                  <h3 className="text-xl font-bold text-gray-800 mb-3">アクセス</h3>
+                  <p className="text-gray-700 leading-relaxed mb-6">{house.access}</p>
+                </>
+              )}
+              {house.shuttle && (
+                <>
+                  <h3 className="text-xl font-bold text-gray-800 mb-3">送迎</h3>
+                  <p className="text-gray-700 leading-relaxed mb-6">{house.shuttle}</p>
+                </>
+              )}
+              {house.payment && ( /* ★支払い方法のセクションをここに移動 */
+                <>
+                  <h3 className="text-xl font-bold text-gray-800 mb-3">支払い方法</h3>
+                  <p className="text-gray-700 leading-relaxed mb-6">{house.payment}</p>
+                </>
+              )}
+              {house.bookingMethod && ( /* ★お問い合わせ先のセクションをここに移動 */
+                <>
+                  <h3 className="text-xl font-bold text-gray-800 mb-3">お問い合わせ先</h3>
+                  <p className="text-gray-700 leading-relaxed mb-2">
+                    <span className="font-semibold">受付窓口:</span> {house.bookingMethod}
+                  </p>
+                  {house.phone && (
+                    <p className="text-gray-700 leading-relaxed mb-6">
+                      電話&FAX: <a href={`tel:${house.phone}`} className="text-blue-600 hover:underline">{house.phone}</a>
+                    </p>
+                  )}
+                  {house.url && (
+                    <p className="text-gray-700 leading-relaxed mb-6">
+                      URL: <Link href={house.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{house.url}</Link>
+                    </p>
+                  )}
+                </>
+              )}
+              {house.note && (
+                <>
+                  <h3 className="text-xl font-bold text-gray-800 mb-3">注意事項</h3>
+                  <p className="text-gray-700 leading-relaxed mb-6">{house.note}</p>
+                </>
+              )}
+              {house.relatedCouncil && (
+                <>
+                  <h3 className="text-xl font-bold text-gray-800 mb-3">関連協議会</h3>
+                  <p className="text-gray-700 leading-relaxed mb-6">{house.relatedCouncil}</p>
+                </>
+              )}
             </div>
             
             {/* サイドバーや予約ボタンなど、今後の拡張スペース */}
             <div className="md:col-span-1 bg-green-50 p-6 rounded-lg shadow-inner">
               <h3 className="text-2xl font-bold text-green-800 mb-4">ご予約・お問い合わせ</h3>
               <p className="text-gray-700 mb-4">
-                この施設にご興味をお持ちでしたら、お気軽にお問い合わせください。
+                この施設にご興味をお持ちでしたら、お気軽にお問い合わせください.
               </p>
               <Link href="/contact" className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105 block text-center mb-4">
                 お問い合わせ

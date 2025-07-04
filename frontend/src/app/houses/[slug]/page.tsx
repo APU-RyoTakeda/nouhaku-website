@@ -34,16 +34,11 @@ const dummyHouseDetails = {
       { src: '/images/houses/tou_2.png', alt: '陶 食卓（海の幸）' },
       { src: '/images/houses/tou_3.png', alt: '陶 室内' },
     ],
-    price: '1泊 9000円/1名(税込),暖房費別途500円/1人',
-    capacity: '1～4名',
-    access: '大館能代空港から車で約25分。秋田自動車道：二ツ井白神ICから22分。',
-    shuttle: '送迎あり',
-    bookingMethod: '事務局：NPO法人ふじさと元気塾',
-    phone: '0185-74-6102',
-    payment: '現金のみ（予約サイトはクレジットカード可）',
-    note: '冠婚葬祭等諸事情により、農家民宿を変更させて頂く場合もありますのでご了承下さい。',
-    relatedCouncil: 'ふじさと粕毛まちづくり協議会',
-   },
+    price: '1泊 9000円/1名(税込)',
+    capacity: '1～5名',
+    amenities: ['Wi-Fi', 'オーシャンビュー', 'キッチン', 'バス・トイレ別', '駐車場'],
+    activities: ['漁業体験', '海水浴', '夕日鑑賞', '海産物料理作り'],
+  },
   // --- 農家民宿 ブナの森 ---
   'yuki-no-sato': {
     title: '農家民宿 ブナの森',
@@ -54,15 +49,10 @@ const dummyHouseDetails = {
       { src: '/images/houses/buna_2.png', alt: 'ブナの森 冬景色' },
       { src: '/images/houses/buna_3.png', alt: 'ブナの森 室内' },
     ],
-   price: '1泊 9000円/1名(税込),暖房費別途500円/1人',
-    capacity: '1～4名',
-    access: '大館能代空港から車で約25分。秋田自動車道：二ツ井白神ICから22分。',
-    shuttle: '送迎あり',
-    bookingMethod: '事務局：NPO法人ふじさと元気塾',
-    phone: '0185-74-6102',
-    payment: '現金のみ（予約サイトはクレジットカード可）',
-    note: '冠婚葬祭等諸事情により、農家民宿を変更させて頂く場合もありますのでご了承下さい。',
-    relatedCouncil: 'ふじさと粕毛まちづくり協議会',
+    price: '1泊 9000円/1名(税込)',
+    capacity: '3～8名',
+    amenities: ['Wi-Fi', '暖炉', '共有リビング', '駐車場', '送迎あり'],
+    activities: ['ブナ林散策', '雪遊び', 'かまくら体験', '郷土料理体験'],
   },
 };
 
@@ -77,6 +67,7 @@ export default async function HouseDetailPage({ params }: HouseDetailPageProps) 
   const house = dummyHouseDetails[slug as keyof typeof dummyHouseDetails];
 
   if (!house) {
+    // 該当する施設が見つからない場合の表示
     return (
       <div className="pt-24 pb-16 min-h-screen bg-gray-50 flex flex-col items-center justify-center text-center">
         <h1 className="text-3xl font-bold text-gray-800 mb-4">施設が見つかりません</h1>
@@ -119,8 +110,10 @@ export default async function HouseDetailPage({ params }: HouseDetailPageProps) 
             ))}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="md:col-span-2">
+          {/* コンテンツ部分を全幅にするため、md:grid-cols-3は削除 */}
+          {/* その代わり、直下にボタンを追加 */}
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-8"> {/* ★ md:grid-cols-3をmd:grid-cols-1に変更 */}
+            <div className="md:col-span-1"> {/* ★md:col-span-2をmd:col-span-1に変更、これによりコンテンツ部分が1カラムに */}
               <h2 className="text-2xl font-bold text-gray-800 mb-4">施設について</h2>
               <p className="text-gray-700 leading-relaxed mb-6">
                 {house.description}
@@ -133,9 +126,18 @@ export default async function HouseDetailPage({ params }: HouseDetailPageProps) 
                 <li>定員: {house.capacity}</li>
               </ul>
 
-             
+              {/* 体験アクティビティ (非表示のまま) */}
+              {house.activities && Array.isArray(house.activities) && house.activities.length > 0 && (
+                <>
+                  <h3 className="text-xl font-bold text-gray-800 mb-3">体験アクティビティ</h3>
+                  <ul className="list-disc list-inside text-gray-700 mb-6">
+                    {house.activities.map((activity, index) => (
+                      <li key={index}>{activity}</li>
+                    ))}
+                  </ul>
+                </>
+              )}
 
-             
               {/* 新しく追加する情報セクション */}
               {house.access && (
                 <>
@@ -149,13 +151,13 @@ export default async function HouseDetailPage({ params }: HouseDetailPageProps) 
                   <p className="text-gray-700 leading-relaxed mb-6">{house.shuttle}</p>
                 </>
               )}
-              {house.payment && ( /* ★支払い方法のセクションをここに移動 */
+              {house.payment && ( /* 支払い方法のセクション */
                 <>
                   <h3 className="text-xl font-bold text-gray-800 mb-3">支払い方法</h3>
                   <p className="text-gray-700 leading-relaxed mb-6">{house.payment}</p>
                 </>
               )}
-              {house.bookingMethod && ( /* ★お問い合わせ先のセクションをここに移動 */
+              {house.bookingMethod && ( /* お問い合わせ先のセクション */
                 <>
                   <h3 className="text-xl font-bold text-gray-800 mb-3">お問い合わせ先</h3>
                   <p className="text-gray-700 leading-relaxed mb-2">
@@ -185,21 +187,18 @@ export default async function HouseDetailPage({ params }: HouseDetailPageProps) 
                   <p className="text-gray-700 leading-relaxed mb-6">{house.relatedCouncil}</p>
                 </>
               )}
+
+              {/* ★予約ボタンをここに追加します。メインコンテンツの直下。 */}
+              <div className="mt-8 pt-8 border-t border-gray-200"> {/* 上部に余白と区切り線 */}
+                <Link href="/booking" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg transition duration-300 transform hover:scale-105 block text-center text-xl">
+                  この施設を予約する
+                </Link>
+              </div>
+              {/* ★予約ボタンここまで★ */}
+
             </div>
             
-            {/* サイドバーや予約ボタンなど、今後の拡張スペース */}
-            <div className="md:col-span-1 bg-green-50 p-6 rounded-lg shadow-inner">
-              <h3 className="text-2xl font-bold text-green-800 mb-4">ご予約・お問い合わせ</h3>
-              <p className="text-gray-700 mb-4">
-                この施設にご興味をお持ちでしたら、お気軽にお問い合わせください.
-              </p>
-              <Link href="/contact" className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105 block text-center mb-4">
-                お問い合わせ
-              </Link>
-              <Link href="/booking" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105 block text-center">
-                この施設を予約する
-              </Link>
-            </div>
+            {/* 右側のサイドバーは完全に削除したので、ここには何も残りません */}
           </div>
         </div>
       </div>

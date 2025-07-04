@@ -1,6 +1,5 @@
 # docker-compose.yml (nouhaku-websiteのルートディレクトリに配置)
 
-version: '3.8' # この行はwarningを避けるために削除してもOKですが、残していても動作します
 
 services:
   db:

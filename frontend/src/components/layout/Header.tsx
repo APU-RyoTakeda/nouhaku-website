@@ -90,7 +90,7 @@ export default function Header({ heroHeight }: HeaderProps) {
         {/* ロゴ部分: 常に白にします */}
         <Link href="/" className={`text-2xl font-extrabold transition-colors duration-300 text-white`}>
           {/* ここにヘッダーに表示したいテキストロゴを入力してください */}
-          Hujisato
+          Fujisato
         </Link>
 
         {/* MenuBarIconコンポーネントを配置 */}

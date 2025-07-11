@@ -34,12 +34,8 @@ export default function Home() {
           <div className="mt-16">
             <FeaturesImageTextSection />
           </div>
-<<<<<<< HEAD
-
-=======
           {/* <HouseSpotlightSection /> */}{" "} {/* ★削除 */}
           {/* <TownSpotlightSection /> */}{" "} {/* ★削除 */}
->>>>>>> f10b1f3ec026503cfb0327acf20be6e4b2868f36
         </>
       )}
     </>

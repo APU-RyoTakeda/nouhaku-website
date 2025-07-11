@@ -3,16 +3,19 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
+// FeatureCardProps 型を定義
 interface FeatureCardProps {
   icon: string;
   title: string;
   description: string;
   link: string;
-  cardBgClass?: string;
+  cardBgClass?: string; // 背景色クラス (オプション)
 }
 
 export default function FeatureCard({ icon, title, description, link, cardBgClass }: FeatureCardProps) {
+  // iconが画像のパスであるか絵文字であるかを判別
   const isImage = typeof icon === 'string' && icon.startsWith('/');
+  // 背景色クラスが指定されていればそれを使用し、なければデフォルトで bg-white を使用
   const bgColor = cardBgClass || 'bg-white';
 
   return (
@@ -22,6 +25,8 @@ export default function FeatureCard({ icon, title, description, link, cardBgClas
     >
       <div className="flex flex-col items-center justify-center">
         {isImage ? (
+          // Next.jsのImageコンポーネントを使用する例
+          // widthとheight、およびclassNameでサイズを調整
           <Image
             src={icon}
             alt={title}

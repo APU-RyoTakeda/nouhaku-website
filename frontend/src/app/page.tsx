@@ -12,7 +12,6 @@ import FeaturesImageTextSection from '../components/sections/FeaturesImageTextSe
 import FixedBookingButton from '../components/common/FixedBookingButton';
 import FeaturesSection from '@/components/sections/FeatureSection';
 
-
 export default function Home() {
   const heroSectionHeightForHeader = 800;
 

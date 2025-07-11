@@ -3,51 +3,35 @@ import HouseCard from '@/components/cards/HouseCard';
 
 // 施設一覧用のダミーデータ
 const dummyHouses = [
-  {
-    slug: 'aki-no-ie',
-    imageUrl: '/images/houses/house-1.png',
-    imageAlt: '秋の家',
-    title: '里山の静けさに包まれる家「秋の家」',
-    location: '秋田県仙北市',
-    description: '築100年の古民家を改築した、懐かしくも新しい空間。囲炉裏を囲んで語らう時間が楽しめます。',
-    price: '1泊 8,000円～',
-  },
+ 
   {
     slug: 'mori-no-ibuki',
-    imageUrl: '/images/houses/house-2.png',
+    imageUrl: '/images/houses/sannko_top.jpg',
     imageAlt: '森の息吹',
-    title: '渓流のせせらぎを聞く「森の息吹」',
-    location: '秋田県湯沢市',
-    description: '森の中に佇む隠れ家のような宿。美しい渓流を眺めながら、心身をリフレッシュできます。',
-    price: '1泊 9,500円～',
+    title: '農家民宿　さんこの宿',
+    location: '秋田県藤里町',
+    description: '「みんなで食べるご飯は美味しい。」楽しい会話は最高のスパイス。暖かくて楽しいごはんをめしあがれ。',
+    price: '1泊 9000円/1名（税込）',
   },
   {
     slug: 'umi-no-sato',
-    imageUrl: '/images/houses/house-3.png',
+    imageUrl: '/images/houses/tou_top.jpg',
     imageAlt: '海の郷',
-    title: '日本海を望む絶景の宿「海の郷」',
-    location: '秋田県男鹿市',
-    description: '雄大な日本海の夕日を独り占めできる贅沢なロケーション。新鮮な海の幸が自慢です。',
-    price: '1泊 10,000円～',
+    title: '農家民宿　陶',
+    location: '秋田県藤里町',
+    description: '料理上手なお母さんの創作レシピや郷土料理をこだわりの器で提供。世界に二つとない素敵な宿。',
+    price: '1泊 9000円/1名（税込）',
   },
   {
     slug: 'yuki-no-sato',
-    imageUrl: '/images/houses/house-4.png',
+    imageUrl: '/images/houses/buna_top.jpg',
     imageAlt: '雪の里',
-    title: '豪雪地帯の温かいもてなし「雪の里」',
-    location: '秋田県横手市',
-    description: '冬にはかまくら体験もできる、雪国ならではの魅力が詰まった農泊。地元料理も絶品です。',
-    price: '1泊 8,500円～',
+    title: '農家民宿　ブナの森',
+    location: '秋田藤里町',
+    description: '四季を感じられる眺めのよい部屋。お父さんとの会話は夜に飲むお酒の一番の肴。',
+    price: '1泊 9000円/1名（税込）',
   },
-  {
-    slug: 'kome-no-sato',
-    imageUrl: '/images/houses/house-5.png',
-    imageAlt: '米の郷',
-    title: '黄金の稲穂に囲まれる「米の郷」',
-    location: '秋田県大潟村',
-    description: '広大な田園地帯で、稲作体験も楽しめる農泊施設。収穫の喜びを共有できます。',
-    price: '1泊 7,500円～',
-  },
+ 
 
 ];
 

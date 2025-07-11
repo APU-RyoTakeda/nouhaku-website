@@ -24,7 +24,7 @@ export default function BookingConfirmPage() {
     // 実際のアプリケーションでは、ここでformDataをバックエンドAPIに送信します。
     // 例:
     // fetch('/api/submit-booking', {
-    //   method: 'POST',
+    //   method: 'POST'
     //   headers: {
     //     'Content-Type': 'application/json',
     //   },

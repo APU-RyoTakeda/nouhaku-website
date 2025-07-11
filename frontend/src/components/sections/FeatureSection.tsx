@@ -44,7 +44,7 @@ export default function FeaturesSection() {
               icon={feature.icon}
               title={feature.title}
               description={feature.description}
-              link={feature.link}
+              link={feature.link} // ここに undefined が渡されていました
               cardBgClass={feature.colorClass}
             />
           ))}

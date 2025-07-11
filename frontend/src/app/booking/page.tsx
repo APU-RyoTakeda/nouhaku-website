@@ -1,10 +1,14 @@
 // frontend/src/app/booking/page.tsx
 "use client"; // This directive is necessary for client-side functionality in Next.js 13+
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Script from 'next/script';
+import {useRouter, useSearchParams} from 'next/navigation';
 
 export default function BookingPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [formData, setFormData] = useState({
     checkInDate: '',
     checkOutDate: '',
@@ -28,6 +32,29 @@ export default function BookingPage() {
     street: '',
     remarks: '',
   });
+
+  // コンポーネントがマウントされたとき、またはクエリパラメータが変更されたときに実行
+  useEffect(() => {
+    const initialData: { [key: string]: any } = {};
+    let hasQueryParams = false;
+    searchParams.forEach((value, key) => {
+      // 数値型に変換する必要があるフィールド
+      if (['adultMale', 'adultFemale', 'child7_12', 'childUnder6'].includes(key)) {
+        initialData[key] = parseInt(value, 10) || 0;
+      } else {
+        initialData[key] = value;
+      }
+      hasQueryParams = true;
+    });
+
+    // クエリパラメータからデータが渡されていれば、formDataを更新
+    if (hasQueryParams) {
+      setFormData(prevData => ({
+        ...prevData,
+        ...initialData,
+      }));
+    }
+  }, [searchParams]); // searchParamsが変更されたときに再実行
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
@@ -83,10 +110,11 @@ export default function BookingPage() {
         alert('住所（郵便番号、都道府県、市区町村）は必須です。');
         return;
     }
-    // Here you would typically send the formData to your backend API
-    console.log('Booking form submitted:', formData);
-    alert('ご予約ありがとうございます！このデータはコンソールに出力されました。実際の予約機能は今後実装されます。');
-    // You might want to add a success message or redirect the user
+
+    // formDataをURLエンコードされた文字列に変換
+    const queryString = new URLSearchParams(formData as Record<string, string>).toString();
+    // 確認ページにリダイレクトし、フォームデータをクエリパラメータとして渡す
+    router.push(`/booking/confirm?${queryString}`);
   };
 
   // 今日の日付を取得し、ISO形式（YYYY-MM-DD）にフォーマット

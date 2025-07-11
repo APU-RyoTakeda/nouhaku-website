@@ -58,7 +58,7 @@ export default function BookingPage() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
-    // Handle number inputs specifically
+  
     if (type === 'number') {
       setFormData({
         ...formData,

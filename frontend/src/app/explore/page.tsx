@@ -45,10 +45,10 @@ export default function ExplorePage() {
               </h3>
               {/* Image is now significantly taller to be the main focus of this section. */}
               <img
-                src="https://placehold.co/1200x600/a8dadc/1d3557?text=Shirakami+Sanchi+Magnificent"
-                alt="[白神山地の壮大なブナ原生林]"
+                src="/images/explore/shirakami-sanchi.jpg" // ここを修正しました
+                alt="白神山地の壮大なブナ原生林"
                 className="w-full h-96 object-cover rounded-2xl mb-8 shadow-lg"
-                onError={(e) => { e.currentTarget.src = "https://placehold.co/1200x600/a8dadc/1d3557?text=Image+not+found"; }}
+                onError={(e) => { e.currentTarget.src = "/images/explore/sirakami-sanchi.jpg"; }} // フォールバック画像パスを修正
               />
               <p className="text-stone-700 leading-relaxed text-lg">
                 手つかずのブナ原生林が織りなす白神山地は、地球の脈動を感じる神秘の森です。
@@ -63,10 +63,10 @@ export default function ExplorePage() {
                 <i className="fas fa-water mr-4 text-cyan-600 text-3xl"></i>静謐なる清流 赤石渓谷 ― 水の芸術
               </h3>
               <img
-                src="https://placehold.co/1200x550/caf0f8/03045e?text=Akaishi+Keikoku+Serene"
-                alt="[赤石渓谷の清らかな流れと岩]"
+                src="/images/explore/akaishi-keikoku.jpg" // ここを修正しました
+                alt="赤石渓谷の清らかな流れと岩"
                 className="w-full h-80 object-cover rounded-2xl mb-8 shadow-lg"
-                onError={(e) => { e.currentTarget.src = "https://placehold.co/1200x550/caf0f8/03045e?text=Image+not+found"; }}
+                onError={(e) => { e.currentTarget.src = "/images/explore/image-not-found.jpg"; }} // フォールバック画像も変更
               />
               <p className="text-stone-700 leading-relaxed text-lg">
                 藤里町を貫く赤石川が刻む渓谷美は、息をのむほど清らかで、まるで自然が作り出した芸術品のようです。
@@ -84,10 +84,10 @@ export default function ExplorePage() {
                   <i className="fas fa-utensils mr-3 text-yellow-600 text-2xl"></i>藤里の滋味豊かな食体験
                 </h3>
                 <img
-                  src="https://placehold.co/600x450/fdf0d5/6d0000?text=Local+Food+Delicacy"
-                  alt="[藤里町の特産品を使った郷土料理]"
+                  src="/images/explore/lamb-kure-don.jpg" // ここを修正しました
+                  alt="藤里町の特産品を使った郷土料理"
                   className="w-full h-72 object-cover rounded-xl mb-6 shadow-md"
-                  onError={(e) => { e.currentTarget.src = "https://placehold.co/600x450/fdf0d5/6d0000?text=Image+not+found"; }}
+                  onError={(e) => { e.currentTarget.src = "/images/explore/image-not-found.jpg"; }} // フォールバック画像も変更
                 />
                 <p className="text-stone-700 leading-relaxed">
                   農泊の醍醐味は、地元で採れる旬の恵みを味わい尽くすことにあります。
@@ -102,10 +102,10 @@ export default function ExplorePage() {
                   <i className="fas fa-handshake-angle mr-3 text-purple-600 text-2xl"></i>温故知新、心通う交流
                 </h3>
                 <img
-                  src="https://placehold.co/600x450/e0b1cb/5a189a?text=Local+Interaction+Warmth"
-                  alt="[地域の人々との温かい交流の様子]"
+                  src="/images/explore/akita-inu.webp" // ここを修正しました
+                  alt="地域の人々との温かい交流の様子"
                   className="w-full h-72 object-cover rounded-xl mb-6 shadow-md"
-                  onError={(e) => { e.currentTarget.src = "https://placehold.co/600x450/e0b1cb/5a189a?text=Image+not+found"; }}
+                  onError={(e) => { e.currentTarget.src = "/images/explore/image-not-found.jpg"; }} // フォールバック画像も変更
                 />
                 <p className="text-stone-700 leading-relaxed">
                   藤里元気塾の農泊では、単に宿泊するだけでは終わらない、地域の温かい人々と深く交流できます。
@@ -120,10 +120,10 @@ export default function ExplorePage() {
                   <i className="fas fa-wine-bottle mr-3 text-rose-600 text-2xl"></i>白神ワインと牧場のチーズ
                 </h3>
                 <img
-                  src="https://placehold.co/600x450/ffe6e6/660000?text=Shirakami+Wine+%26+Cheese"
-                  alt="[白神ワインと地元牧場のチーズ]"
+                  src="/images/explore/shirakami-wine.jpg" // ここを修正しました
+                  alt="白神ワインと地元牧場のチーズ"
                   className="w-full h-72 object-cover rounded-xl mb-6 shadow-md"
-                  onError={(e) => { e.currentTarget.src = "https://placehold.co/600x450/ffe6e6/660000?text=Image+not+found"; }}
+                  onError={(e) => { e.currentTarget.src = "/images/explore/image-not-found.jpg"; }} // フォールバック画像も変更
                 />
                 <p className="text-stone-700 leading-relaxed">
                   白神山地の豊かな水と土壌が育んだぶどうから生まれる「白神ワイン」は、
@@ -138,10 +138,10 @@ export default function ExplorePage() {
                   <i className="fas fa-seedling mr-3 text-lime-600 text-2xl"></i>白神の恵み：化粧水と茸
                 </h3>
                 <img
-                  src="https://placehold.co/600x450/e6ffe6/006600?text=Shirakami+Blessings"
-                  alt="[白神山地の恵み（化粧水、きのこ）]"
+                  src="/images/explore/shirakami-blessings.jpg" // ここを修正しました
+                  alt="白神山地の恵み（化粧水、きのこ）"
                   className="w-full h-72 object-cover rounded-xl mb-6 shadow-md"
-                  onError={(e) => { e.currentTarget.src = "https://placehold.co/600x450/e6ffe6/006600?text=Image+not+found"; }}
+                  onError={(e) => { e.currentTarget.src = "/images/explore/image-not-found.jpg"; }} // フォールバック画像も変更
                 />
                 <p className="text-stone-700 leading-relaxed">
                   世界遺産の森から生まれた、白神酵母を使用した化粧水は、お肌に優しく自然の恵みを届けます。
@@ -158,10 +158,10 @@ export default function ExplorePage() {
                 <i className="fas fa-map-marker-alt mr-4 text-orange-600 text-3xl"></i>地元で愉しむ珠玉の食処
               </h3>
               <img
-                src="https://placehold.co/1200x550/fff0e6/804000?text=Local+Dining+Experience"
-                alt="[藤里町の地元食材を活かした食事処の様子]"
+                src="/images/explore/kiritanpo-nabe.jpg" // ここを修正しました
+                alt="藤里町の地元食材を活かした食事処の様子"
                 className="w-full h-80 object-cover rounded-2xl mb-8 shadow-lg"
-                onError={(e) => { e.currentTarget.src = "https://placehold.co/1200x550/fff0e6/804000?text=Image+not+found"; }}
+                onError={(e) => { e.currentTarget.src = "/images/explore/image-not-found.jpg"; }} // フォールバック画像も変更
               />
               <p className="text-stone-700 leading-relaxed text-lg">
                 農泊での家庭料理に加え、藤里町には地元の豊かな食材を最大限に活かした、温かいお料理を提供する食処が点在します。

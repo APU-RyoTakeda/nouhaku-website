@@ -1,10 +1,14 @@
 // frontend/src/app/booking/page.tsx
 "use client"; // This directive is necessary for client-side functionality in Next.js 13+
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Script from 'next/script';
+import {useRouter, useSearchParams} from 'next/navigation';
 
 export default function BookingPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [formData, setFormData] = useState({
     checkInDate: '',
     checkOutDate: '',
@@ -29,9 +33,37 @@ export default function BookingPage() {
     remarks: '',
   });
 
+  // コンポーネントがマウントされたとき、またはクエリパラメータが変更されたときに実行
+  useEffect(() => {
+    const initialData: { [key: string]: any } = {};
+    let hasQueryParams = false;
+    searchParams.forEach((value, key) => {
+      // 数値型に変換する必要があるフィールド
+      if (['adultMale', 'adultFemale', 'child7_12', 'childUnder6'].includes(key)) {
+        initialData[key] = parseInt(value, 10) || 0;
+      } else {
+        initialData[key] = value;
+      }
+      hasQueryParams = true;
+    });
+
+    // クエリパラメータからデータが渡されていれば、formDataを更新
+    if (hasQueryParams) {
+      setFormData(prevData => ({
+        ...prevData,
+        ...initialData,
+      }));
+    }
+  }, [searchParams]); // searchParamsが変更されたときに再実行
+
+  // ページがロードされたときに一番上までスクロールする
+  useEffect(() => {
+    window.scrollTo(0, 0); // ページを一番上までスクロール
+  }, []); // 空の依存配列により、コンポーネントのマウント時に一度だけ実行される
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
-    // Handle number inputs specifically
+  
     if (type === 'number') {
       setFormData({
         ...formData,
@@ -42,6 +74,47 @@ export default function BookingPage() {
         ...formData,
         [name]: value,
       });
+    }
+  };
+
+  // 郵便番号入力欄からフォーカスが外れたときに住所検索を行う
+  const handlePostalCodeBlur = () => {
+    if (formData.postalCode1.length === 3 && formData.postalCode2.length === 4) {
+      setTimeout(() => {
+        (window as any).AjaxZip3.zip2addr('postalCode1', 'postalCode2', 'prefecture', 'city', 'street');
+
+        setTimeout(() => {
+          const newPrefecture = (document.getElementById('prefecture') as HTMLSelectElement)?.value || '';
+          const newCity = (document.getElementById('city') as HTMLInputElement)?.value || '';
+          const ajaxZip3Street = (document.getElementById('street') as HTMLTextAreaElement)?.value || ''; // AjaxZip3が入力した番地
+
+          setFormData(currentFormData => {
+            let finalStreet = currentFormData.street; // 現在のステートの番地（ユーザーが入力した可能性のある内容）
+
+            // AjaxZip3が番地を提供し、かつ現在のステートの番地がAjaxZip3の番地を含んでいない、または現在のステートの番地が空の場合
+            if (ajaxZip3Street) {
+              // 現在の番地がAjaxZip3の番地で始まっていない、または全く異なる場合
+              // AjaxZip3の番地を既存の入力の前に結合する
+              if (!currentFormData.street.startsWith(ajaxZip3Street)) {
+                finalStreet = ajaxZip3Street + finalStreet;
+              }
+              // 現在のステートの番地が空の場合、AjaxZip3の番地をそのまま使用
+              if (!currentFormData.street) {
+                finalStreet = ajaxZip3Street;
+              }
+            }
+            // それ以外の場合（AjaxZip3が番地を提供しない、またはすでに現在のステートに含まれている場合）は、
+            // currentFormData.street（ユーザーの入力）をそのまま保持する
+
+            return {
+              ...currentFormData,
+              prefecture: newPrefecture,
+              city: newCity,
+              street: finalStreet,
+            };
+          });
+        }, 50); // AjaxZip3がDOMを更新するのを待つための短い遅延
+      }, 0); // Reactのステート更新を先に処理させるための短い遅延
     }
   };
 
@@ -83,10 +156,11 @@ export default function BookingPage() {
         alert('住所（郵便番号、都道府県、市区町村）は必須です。');
         return;
     }
-    // Here you would typically send the formData to your backend API
-    console.log('Booking form submitted:', formData);
-    alert('ご予約ありがとうございます！このデータはコンソールに出力されました。実際の予約機能は今後実装されます。');
-    // You might want to add a success message or redirect the user
+
+    // formDataをURLエンコードされた文字列に変換
+    const queryString = new URLSearchParams(formData as Record<string, string>).toString();
+    // 確認ページにリダイレクトし、フォームデータをクエリパラメータとして渡す
+    router.push(`/booking/confirm?${queryString}`);
   };
 
   // 今日の日付を取得し、ISO形式（YYYY-MM-DD）にフォーマット
@@ -117,6 +191,19 @@ export default function BookingPage() {
     "香川県", "愛媛県", "高知県", "福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県",
     "鹿児島県", "沖縄県"
   ];
+
+  // カスタムアラート表示用の状態
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
+
+  // カスタムアラートを表示する関数
+  const showCustomAlert = (message: string) => {
+    setAlertMessage(message);
+  };
+
+  // カスタムアラートを閉じる関数
+  const closeCustomAlert = () => {
+    setAlertMessage(null);
+  };
 
   return (
   <> {/* ここをReact Fragmentで囲みました */}
@@ -440,7 +527,7 @@ export default function BookingPage() {
                                 name="postalCode2"
                                 value={formData.postalCode2}
                                 onChange={handleChange}
-                                onKeyUp={() => (window as any).AjaxZip3.zip2addr('postalCode1', 'postalCode2', 'prefecture', 'city', 'street')}
+                                onBlur={handlePostalCodeBlur}
                                 maxLength={4}
                                 className="w-24 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
                                 placeholder="例: 4567"

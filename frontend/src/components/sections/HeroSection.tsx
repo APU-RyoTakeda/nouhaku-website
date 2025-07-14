@@ -4,9 +4,9 @@ import Image from 'next/image';
 
 export default function HeroSection() {
   const heroImages = [
-    { src: '/images/hero/shirakamisannti_1.jpg', alt: '白神山地 夏のブナ林' },
+    { src: '/images/hero/shirakamisannti_3.jpg', alt: '白神山地 夏のブナ林' },
     { src: '/images/hero/shirakamisannti_2.jpg', alt: '白神山地 透明な渓流' },
-    { src: '/images/hero/shirakamisannti_3.jpg', alt: '白神山地 秋の滝' },
+    { src: '/images/hero/shirakamisannti_1.jpg', alt: '白神山地 秋の滝' },
     { src: '/images/hero/shirakamisannti_4.jpg', alt: '白神山地 冬の山々' },
   ];
 

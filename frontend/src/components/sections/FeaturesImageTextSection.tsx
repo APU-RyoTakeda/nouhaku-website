@@ -90,7 +90,7 @@ export default function FeaturesImageTextSection() {
 
         {/* 2つ目の特徴：右に画像、左に説明 - 秋田の豊かな自然 */}
         <InternalImageTextRow
-          imageSrc="/images/general/taki_1.jpg"
+          imageSrc="/images/general/meguru_2.jpg"
           imageAlt="秋田の雄大な自然"
           title="息をのむ秋田の豊かな自然"
           // ★変更: 文章内に <br /> を挿入し、改行する★

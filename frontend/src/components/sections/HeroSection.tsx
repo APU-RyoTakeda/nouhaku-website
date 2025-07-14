@@ -33,7 +33,7 @@ export default function HeroSection() {
           />
         </div>
 
-        {/* キャッチコピーはここに表示されます */}
+        
       </div>
     </section>
   );

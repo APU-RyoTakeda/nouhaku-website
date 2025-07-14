@@ -15,7 +15,7 @@ const dummyHouses = [
   },
   {
     slug: 'umi-no-sato',
-    imageUrl: '/images/houses/tou_top.jpg',
+    imageUrl: '/images/houses/tou_top.png',
     imageAlt: '海の郷',
     title: '農家民宿　陶',
     location: '秋田県藤里町',

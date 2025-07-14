@@ -1,6 +1,5 @@
 # docker-compose.yml (nouhaku-websiteのルートディレクトリに配置)
 
-
 services:
   db:
     image: postgres:15-alpine
@@ -11,44 +10,42 @@ services:
       - POSTGRES_USER=farmstay_user
       - POSTGRES_PASSWORD=T4keastr0ll
     ports:
-      - "5433:5432" # ホスト側のポートが5433になっていることを確認
+      - "5433:5432"
 
   backend:
     build:
-      context: .
-      dockerfile: backend/Dockerfile
-    command: python manage.py runserver 0.0.0.0:8000
+      context: ./backend
+      dockerfile: Dockerfile
     volumes:
-      - .:/app
+      - ./backend:/app
       - media_data:/app/media
     ports:
       - "8000:8000"
     env_file:
-      - ./.env # プロジェクトルートの.envファイルが存在することを確認
-      - ./backend/.env.local # backendディレクトリ内の.env.localファイルが存在することを確認
-    # environment: # この行と、これ以降のenvironmentに関するコメントは全て削除されていることを確認
+      - ./.env
+      - ./backend/.env.local
     depends_on:
       - db
 
-  # ★★★ ここから frontend サービスを追加 ★★★
   frontend:
     build:
-      context: ./frontend # frontend ディレクトリをビルドコンテキストとする
-      dockerfile: Dockerfile # frontend/Dockerfile を指定
+      context: ./frontend
+      dockerfile: Dockerfile
+      # ★修正: build args を削除
+      # args:
+      #   NEXT_PUBLIC_API_URL: http://backend:8000 
     ports:
-      - "3000:3000" # ホストの3000ポートをコンテナの3000ポートにマッピング
+      - "3000:3000"
     volumes:
-      - ./frontend:/app # ホストの frontend ディレクトリをコンテナの /app にマウント
-      - /app/node_modules # 匿名ボリュームで node_modules がホストから上書きされないようにする (重要!)
+      - ./frontend:/app
+      - /app/node_modules
     env_file:
-      - ./frontend/.env.local # frontend固有の環境変数があれば読み込む（もしあれば）
+      - ./frontend/.env.local
     depends_on:
-      - backend # frontend は backend が起動してから起動するように依存関係を設定
-    environment:
-      # Next.jsからバックエンドAPIを叩くための環境変数
-      # Docker内部ネットワークのサービス名 'backend' を使う
-      NEXT_PUBLIC_API_URL: http://backend:8000 # ★重要: ここはサービスの解決名
-
+      - backend
+    # environmentセクションも削除（もしあれば）
+    # environment:
+    #   NEXT_PUBLIC_API_URL: http://backend:8000 
 volumes:
   pg_data:
   media_data:

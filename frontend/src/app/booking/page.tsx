@@ -8,7 +8,8 @@ import { BookingFormData } from '../../types/booking'; // 正しいインポー�
 
 // 分割したコンポーネントをインポート
 import BookingDatesSection from './components/BookingDatesSection'; 
-import BookingGuestsSection from './components/BookingGuestsSection'; // ★追加: ご利用人数セクション
+import BookingGuestsSection from './components/BookingGuestsSection';
+import BookingContactInfoSection from './components/BookingContactInfoSection'; // ★追加: 予約者情報セクション
 
 export default function BookingPage() {
   const router = useRouter();
@@ -194,253 +195,114 @@ export default function BookingPage() {
               {/* 日程セクション */}
               <BookingDatesSection formData={formData} handleChange={handleChange} />
 
-              {/* ★変更: ご利用人数セクション */}
+              {/* ご利用人数セクション */}
               <BookingGuestsSection formData={formData} handleChange={handleChange as any} /> 
+              
+              {/* ★変更: 予約者情報セクション */}
+              <BookingContactInfoSection formData={formData} handleChange={handleChange as any} />
               {/* handleChangeの型がHTMLInputElement | HTMLSelectElement | HTMLTextAreaElement なので、
-                 BookingGuestsSectionに渡す際はHTMLInputElementに絞るためにanyで一時的に型アサーションしています。
+                 BookingContactInfoSectionに渡す際はHTMLInputElement | HTMLSelectElementに絞るためにanyで一時的に型アサーションしています。
                  後でhandleChangeの型をより汎用的にするか、各セクションで専用のハンドラーを渡すことを検討します。*/}
 
-              {/* --- 予約者情報 --- */}
+              {/* --- 住所 --- */}
               {/* このセクションはまだ分割していません */}
-              <div className="border-b border-gray-200 pb-6 pt-6">
-                <h2 className="text-2xl font-semibold text-gray-800 mb-4">③ 予約者情報</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="mt-4">
+                <h3 className="text-lg font-medium text-gray-700 mb-2">住所<span className="text-red-500">*</span></h3>
+                <div className="space-y-4">
+                  {/* 郵便番号 */}
                   <div>
-                    <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">
-                      申込者名 (姓)<span className="text-red-500">*</span>
+                    <label htmlFor="postalCode1" className="block text-sm font-medium text-gray-700 mb-1">
+                      郵便番号
                     </label>
-                    <input
-                      type="text"
-                      id="lastName"
-                      name="lastName"
-                      value={formData.lastName}
-                      onChange={handleChange}
-                      required
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
-                      申込者名 (名)<span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="firstName"
-                      name="firstName"
-                      value={formData.firstName}
-                      onChange={handleChange}
-                      required
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="lastNameKana" className="block text-sm font-medium text-gray-700 mb-1">
-                      フリガナ (セイ)<span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="lastNameKana"
-                      name="lastNameKana"
-                      value={formData.lastNameKana}
-                      onChange={handleChange}
-                      required
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="firstNameKana" className="block text-sm font-medium text-gray-700 mb-1">
-                      フリガナ (メイ)<span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="firstNameKana"
-                      name="firstNameKana"
-                      value={formData.firstNameKana}
-                      onChange={handleChange}
-                      required
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                    />
-                  </div>
-                </div>
-
-                <div className="mt-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    性別<span className="text-red-500">*</span>
-                  </label>
-                  <div className="mt-1 flex space-x-4">
-                    <label className="inline-flex items-center">
-                      <input
-                        type="radio"
-                        name="gender"
-                        value="男性"
-                        checked={formData.gender === '男性'}
-                        onChange={handleChange}
-                        required
-                        className="form-radio h-4 w-4 text-green-600 focus:ring-green-500"
-                      />
-                      <span className="ml-2 text-gray-700">男性</span>
-                    </label>
-                    <label className="inline-flex items-center">
-                      <input
-                        type="radio"
-                        name="gender"
-                        value="女性"
-                        checked={formData.gender === '女性'}
-                        onChange={handleChange}
-                        required
-                        className="form-radio h-4 w-4 text-green-600 focus:ring-green-500"
-                      />
-                      <span className="ml-2 text-gray-700">女性</span>
-                    </label>
-                    <label className="inline-flex items-center">
-                      <input
-                        type="radio"
-                        name="gender"
-                        value="その他/回答しない"
-                        checked={formData.gender === 'その他/回答しない'}
-                        onChange={handleChange}
-                        required
-                        className="form-radio h-4 w-4 text-green-600 focus:ring-green-500"
-                      />
-                      <span className="ml-2 text-gray-700">その他/回答しない</span>
-                    </label>
-                  </div>
-                </div>
-
-                <div className="mt-4">
-                  <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-1">
-                    電話番号<span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="tel"
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    value={formData.phoneNumber}
-                    onChange={handleChange}
-                    required
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                    placeholder="090-1234-5678"
-                  />
-                  <p className="mt-1 text-xs text-gray-500">※当日ご連絡のつく電話番号でお願いします。</p>
-                </div>
-
-                <div className="mt-4">
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                    メールアドレス<span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                    placeholder="your.email@example.com"
-                  />
-                  <p className="mt-1 text-xs text-gray-500">※確認のため，ご連絡可能なメールアドレスをご入力ください。</p>
-                  <p className="mt-1 text-xs text-gray-500">※携帯電話などでパソコンからのメールを受信拒否する設定をされている場合はドメイン「」からのメール受信を許可してください。</p>
-                </div>
-
-                {/* --- 住所 --- */}
-                <div className="mt-4">
-                  <h3 className="text-lg font-medium text-gray-700 mb-2">住所<span className="text-red-500">*</span></h3>
-                  <div className="space-y-4">
-                    {/* 郵便番号 */}
-                    <div>
-                      <label htmlFor="postalCode1" className="block text-sm font-medium text-gray-700 mb-1">
-                        郵便番号
-                      </label>
-                      <div className="flex items-center space-x-2">
-                        <input
-                          type="text"
-                          id="postalCode1"
-                          name="postalCode1"
-                          value={formData.postalCode1}
-                          onChange={handleChange}
-                          onKeyUp={() => (window as any).AjaxZip3.zip2addr('postalCode1', 'postalCode2', 'prefecture', 'city', 'street')}
-                          maxLength={3}
-                          className="w-20 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                          placeholder="例: 123"
-                          required
-                        />
-                        <span>-</span>
-                        <input
-                          type="text"
-                          id="postalCode2"
-                          name="postalCode2"
-                          value={formData.postalCode2}
-                          onChange={handleChange}
-                          onBlur={handlePostalCodeBlur}
-                          maxLength={4}
-                          className="w-24 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                          placeholder="例: 4567"
-                          required
-                        />
-                      </div>
-                    </div>
-
-                    {/* 都道府県 */}
-                    <div>
-                      <label htmlFor="prefecture" className="block text-sm font-medium text-gray-700 mb-1">
-                        都道府県
-                      </label>
-                      <select
-                        id="prefecture"
-                        name="prefecture"
-                        value={formData.prefecture}
-                        onChange={handleChange}
-                        required
-                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                      >
-                        {/* prefectures はまだ元の場所に残っています */}
-                        {/* ここにprefectures.mapのロジックが残っていますが、後で移動します */}
-                        <option value="">選択してください</option>
-                        {/* 仮の都道府県リスト（後でBookingAddressSectionに移動） */}
-                        {["", "北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県", "茨城県", "栃木県",
-                          "群馬県", "埼玉県", "千葉県", "東京都", "神奈川県", "新潟県", "富山県", "石川県", "福井県",
-                          "山梨県", "長野県", "岐阜県", "静岡県", "愛知県", "三重県", "滋賀県", "京都府", "大阪府",
-                          "兵庫県", "奈良県", "和歌山県", "鳥取県", "島根県", "岡山県", "広島県", "山口県", "徳島県",
-                          "香川県", "愛媛県", "高知県", "福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県",
-                          "鹿児島県", "沖縄県"
-                        ].map((pref, index) => (
-                          <option key={index} value={pref}>{pref}</option>
-                        ))}
-                      </select>
-                    </div>
-
-                    {/* 市区町村 */}
-                    <div>
-                      <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">
-                        市区町村
-                      </label>
+                    <div className="flex items-center space-x-2">
                       <input
                         type="text"
-                        id="city"
-                        name="city"
-                        value={formData.city}
+                        id="postalCode1"
+                        name="postalCode1"
+                        value={formData.postalCode1}
                         onChange={handleChange}
+                        onKeyUp={() => (window as any).AjaxZip3.zip2addr('postalCode1', 'postalCode2', 'prefecture', 'city', 'street')}
+                        maxLength={3}
+                        className="w-20 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                        placeholder="例: 123"
                         required
-                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                        placeholder="市町村"
+                      />
+                      <span>-</span>
+                      <input
+                        type="text"
+                        id="postalCode2"
+                        name="postalCode2"
+                        value={formData.postalCode2}
+                        onChange={handleChange}
+                        onBlur={handlePostalCodeBlur}
+                        maxLength={4}
+                        className="w-24 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                        placeholder="例: 4567"
+                        required
                       />
                     </div>
+                  </div>
 
-                    {/* 番地・建物名 */}
-                    <div>
-                      <label htmlFor="street" className="block text-sm font-medium text-gray-700 mb-1">
-                        番地・建物名
-                      </label>
-                      <textarea
-                        id="street"
-                        name="street"
-                        value={formData.street}
-                        onChange={handleChange}
-                        rows={3}
-                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                        placeholder="例: 〇〇1-2-3 〇〇マンション101号室"
-                      ></textarea>
-                    </div>
+                  {/* 都道府県 */}
+                  <div>
+                    <label htmlFor="prefecture" className="block text-sm font-medium text-gray-700 mb-1">
+                      都道府県
+                    </label>
+                    <select
+                      id="prefecture"
+                      name="prefecture"
+                      value={formData.prefecture}
+                      onChange={handleChange}
+                      required
+                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                    >
+                      {/* prefectures はまだ元の場所に残っています */}
+                      {/* ここにprefectures.mapのロジックが残っていますが、後で移動します */}
+                      <option value="">選択してください</option>
+                      {/* 仮の都道府県リスト（後でBookingAddressSectionに移動） */}
+                      {["", "北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県", "茨城県", "栃木県",
+                        "群馬県", "埼玉県", "千葉県", "東京都", "神奈川県", "新潟県", "富山県", "石川県", "福井県",
+                        "山梨県", "長野県", "岐阜県", "静岡県", "愛知県", "三重県", "滋賀県", "京都府", "大阪府",
+                        "兵庫県", "奈良県", "和歌山県", "鳥取県", "島根県", "岡山県", "広島県", "山口県", "徳島県",
+                        "香川県", "愛媛県", "高知県", "福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県",
+                        "鹿児島県", "沖縄県"
+                      ].map((pref, index) => (
+                        <option key={index} value={pref}>{pref}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* 市区町村 */}
+                  <div>
+                    <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">
+                      市区町村
+                    </label>
+                    <input
+                      type="text"
+                      id="city"
+                      name="city"
+                      value={formData.city}
+                      onChange={handleChange}
+                      required
+                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                      placeholder="市町村"
+                    />
+                  </div>
+
+                  {/* 番地・建物名 */}
+                  <div>
+                    <label htmlFor="street" className="block text-sm font-medium text-gray-700 mb-1">
+                      番地・建物名
+                    </label>
+                    <textarea
+                      id="street"
+                      name="street"
+                      value={formData.street}
+                      onChange={handleChange}
+                      rows={3}
+                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                      placeholder="例: 〇〇1-2-3 〇〇マンション101号室"
+                    ></textarea>
                   </div>
                 </div>
               </div>

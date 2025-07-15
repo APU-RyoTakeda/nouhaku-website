@@ -6,9 +6,9 @@ import Script from 'next/script';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { BookingFormData } from '../../types/booking'; // 正しいインポートパス
 
-// ★追加: 分割したコンポーネントをインポート
+// 分割したコンポーネントをインポート
 import BookingDatesSection from './components/BookingDatesSection'; 
-// 他のセクションも今後ここにインポートされます
+import BookingGuestsSection from './components/BookingGuestsSection'; // ★追加: ご利用人数セクション
 
 export default function BookingPage() {
   const router = useRouter();
@@ -165,12 +165,6 @@ export default function BookingPage() {
     router.push(`/booking/confirm?${queryString}`);
   };
 
-  // ★削除: getTodayString, getMinCheckOutDate, checkInTimes, prefectures は BookingDatesSection に移動したため削除
-  // const getTodayString = () => { ... };
-  // const getMinCheckOutDate = () => { ... };
-  // const checkInTimes = Array.from({ length: 6 }, (_, i) => `${15 + i}:00`);
-  // const prefectures = [ ... ];
-
   // カスタムアラート表示用の状態 (今回は使用されていませんが、残しておきます)
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
 
@@ -197,74 +191,14 @@ export default function BookingPage() {
           </h1>
           <div className="bg-white rounded-lg shadow-xl p-6 md:p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* ★変更: BookingDatesSection コンポーネントを使用 */}
+              {/* 日程セクション */}
               <BookingDatesSection formData={formData} handleChange={handleChange} />
 
-              {/* --- ご利用人数 --- */}
-              {/* このセクションはまだ分割していません */}
-              <div className="border-b border-gray-200 pb-6 pt-6">
-                <h2 className="text-2xl font-semibold text-gray-800 mb-4">② ご利用人数</h2>
-                <div className="space-y-4">
-                  <div>
-                    <label htmlFor="adultMale" className="block text-sm font-medium text-gray-700 mb-1">
-                      大人（男性）<span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="number"
-                      id="adultMale"
-                      name="adultMale"
-                      value={formData.adultMale}
-                      onChange={handleChange}
-                      min="0"
-                      required
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="adultFemale" className="block text-sm font-medium text-gray-700 mb-1">
-                      大人（女性）<span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="number"
-                      id="adultFemale"
-                      name="adultFemale"
-                      value={formData.adultFemale}
-                      onChange={handleChange}
-                      min="0"
-                      required
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="child7_12" className="block text-sm font-medium text-gray-700 mb-1">
-                      7～12歳
-                    </label>
-                    <input
-                      type="number"
-                      id="child7_12"
-                      name="child7_12"
-                      value={formData.child7_12}
-                      onChange={handleChange}
-                      min="0"
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="childUnder6" className="block text-sm font-medium text-gray-700 mb-1">
-                      6歳以下
-                    </label>
-                    <input
-                      type="number"
-                      id="childUnder6"
-                      name="childUnder6"
-                      value={formData.childUnder6}
-                      onChange={handleChange}
-                      min="0"
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                    />
-                  </div>
-                </div>
-              </div>
+              {/* ★変更: ご利用人数セクション */}
+              <BookingGuestsSection formData={formData} handleChange={handleChange as any} /> 
+              {/* handleChangeの型がHTMLInputElement | HTMLSelectElement | HTMLTextAreaElement なので、
+                 BookingGuestsSectionに渡す際はHTMLInputElementに絞るためにanyで一時的に型アサーションしています。
+                 後でhandleChangeの型をより汎用的にするか、各セクションで専用のハンドラーを渡すことを検討します。*/}
 
               {/* --- 予約者情報 --- */}
               {/* このセクションはまだ分割していません */}

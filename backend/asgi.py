@@ -1,3 +1,5 @@
+# nouhaku-website/backend/asgi.py
+
 """
 ASGI config for backend project.
 
@@ -11,6 +13,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings') # ★修正: 'backend.settings' から 'settings' に変更
 
 application = get_asgi_application()

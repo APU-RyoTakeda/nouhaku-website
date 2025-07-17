@@ -67,7 +67,6 @@ export default function FeaturesImageTextSection() {
     <section
       className="py-16 bg-neutral-50"
       style={{
-        backgroundImage: "url('/images/backgrounds/washi-texture.png')",
         backgroundRepeat: "repeat",
         backgroundSize: "auto",
       }}

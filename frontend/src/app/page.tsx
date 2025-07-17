@@ -6,8 +6,6 @@ import Header from '../components/layout/Header';
 import HeroSection from '../components/sections/HeroSection';
 import PhraseSection from '../components/sections/PhraseSection';
 import SplashLoader from '@/components/common/SplashLoader';
-// import HouseSpotlightSection from '@/components/sections/HouseSpotlightSection'; // ★削除
-// import TownSpotlightSection from '../components/sections/TownSpotlightSection'; // ★削除
 import FeaturesImageTextSection from '../components/sections/FeaturesImageTextSection';
 import FixedBookingButton from '../components/common/FixedBookingButton';
 import FeaturesSection from '@/components/sections/FeatureSection';

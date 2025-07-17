@@ -4,7 +4,7 @@ import Image from 'next/image';
 export default function PhraseSection() {
   return (
     // sectionタグは画面いっぱいの高さを持ち、中身を左右に分割するFlexboxコンテナ
-    <section className="relative w-full h-screen flex text-gray-800">
+    <section className="relative w-full h-screen flex text-white-800">
 
       {/* 左側のコンテンツエリア */}
       {/* 画面幅の半分を占め、Flexboxで内容を中央に配置 */}

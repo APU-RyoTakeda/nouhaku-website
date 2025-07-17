@@ -1,3 +1,4 @@
+// frontend/src/components/layout/Header.tsx
 'use client'; // クライアントコンポーネントとしてマーク
 
 import { useState, useEffect } from 'react';
@@ -16,16 +17,17 @@ interface HeaderProps {
   heroHeight: number; // HeroSectionの高さを受け取る
 }
 
+// ★★★ 変更点: ページ内リンク用のhrefを追加/変更 ★★★
 const navItems: NavItem[] = [
-  // メニュー項目を英語に変更し、'Home'は全画面メニューから除外
-  // { name: 'Home', href: '/' }, // 'Home'はオーバービューには表示しない
-  { name: 'Stay', href: '/houses' },
-  { name: 'Eat', href: '/eat' },
-  { name: 'Explore', href: '/explore' },
-  { name: 'Access', href: '/access' },
-  { name: 'Contact', href: '/contact' },
-  { name: 'Booking', href: '/booking' },
-  { name: 'Privacy Policy', href: '/privacy-policy' },
+  // 'Home'は全画面メニューから除外
+  { name: 'Home', href: '#hero-section' }, // Homeはトップセクションへスクロール
+  { name: 'Stay', href: '#stay-section' }, // 仮のセクションID
+  { name: 'Eat', href: '#eat-section' },   // 仮のセクションID
+  { name: 'Explore', href: '#explore-section' }, // 仮のセクションID
+  { name: 'Access', href: '#access-section' },   // 仮のセクションID
+  { name: 'Contact', href: '#contact-section' }, // 仮のセクションID
+  { name: 'Booking', href: '#booking-section' }, // 仮のセクションID
+  { name: 'Privacy Policy', href: '#privacy-policy-section' }, // 仮のセクションID
 ];
 
 // SNSリンクの定義を更新 - SVGパスの代わりに画像ファイルへのパスを使用
@@ -88,7 +90,8 @@ export default function Header({ heroHeight }: HeaderProps) {
     }`}>
       <div className="container mx-auto flex justify-between items-center px-4">
         {/* ロゴ部分: 常に白にします */}
-        <Link href="/" className={`text-2xl font-extrabold transition-colors duration-300 text-white`}>
+        {/* ★★★ 変更点: ロゴも#hero-sectionへスクロールするように変更 ★★★ */}
+        <Link href="#hero-section" onClick={() => setOpen(false)} className={`text-2xl font-extrabold transition-colors duration-300 text-white`}>
           {/* ここにヘッダーに表示したいテキストロゴを入力してください */}
           Fujisato
         </Link>

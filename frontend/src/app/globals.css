@@ -7,6 +7,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* スムーズスクロールの追加 */
+
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -69,21 +75,3 @@ html, body, #__next, .swiper, .swiper-slide {
 .font-sawarabi {
   font-family: 'Sawarabi Mincho', serif;
 }
-
-/* frontend/src/app/globals.css */
-
-/* ★ファイルの最も上に追加★ */
-@import url('https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&display=swap');
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* ... 既存のCSSコード ... */
-
-/* ★ファイルの最も下に追加★ */
-.font-sawarabi {
-  font-family: 'Sawarabi Mincho', serif;
-}
-
-

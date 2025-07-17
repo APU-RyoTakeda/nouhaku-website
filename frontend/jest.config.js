@@ -9,8 +9,9 @@ const createJestConfig = nextJest({
 const config = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   testEnvironment: 'jest-environment-jsdom',
-  // moduleNameMapper は不要な場合が多いので削除
-  // transformIgnorePatterns も next/jest が適切に処理するため、基本的には不要
+  // moduleNameMapper や transform は next/jest が自動で設定するため、ここでは削除
+  // msw のトランスパイルが必要な場合は、transformIgnorePatterns を残す
+  // transformIgnorePatterns: ['/node_modules/(?!msw)/'], // 必要であればコメント解除
 };
 
 module.exports = createJestConfig(config);

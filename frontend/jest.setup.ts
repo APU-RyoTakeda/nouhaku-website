@@ -1,6 +1,21 @@
 // frontend/jest.setup.ts
 import '@testing-library/jest-dom';
 
+// Fetch API (Response, Request, fetch) をグローバルに利用可能にする
+// JSDOM環境でこれらが未定義の場合があるため、node-fetchでポリフィル
+import fetch, { Response, Request } from 'node-fetch';
+
+// globalオブジェクトにFetch API関連のオブジェクトが存在しない場合にのみ設定
+if (typeof global.fetch === 'undefined') {
+  global.fetch = fetch as any; // fetchの型定義がJestと合わない場合があるためany
+}
+if (typeof global.Response === 'undefined') {
+  global.Response = Response;
+}
+if (typeof global.Request === 'undefined') {
+  global.Request = Request;
+}
+
 // TextEncoder と TextDecoder をグローバルに利用可能にする
 // JestのJSDOM環境でこれらが未定義の場合があるため、text-encodingでポリフィル
 import { TextEncoder, TextDecoder } from 'text-encoding';

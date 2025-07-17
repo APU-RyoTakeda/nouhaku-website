@@ -3,10 +3,11 @@ import Image from 'next/image';
 
 export default function PhraseSection() {
   return (
-    // sectionタグの背景をbg-whiteに変更
-    <section className="relative w-full h-screen flex text-gray-800 bg-white"> {/* ★bg-whiteを追加 */}
+    // sectionタグは画面いっぱいの高さを持ち、中身を左右に分割するFlexboxコンテナ
+    <section className="relative w-full h-screen flex text-white-800">
 
       {/* 左側のコンテンツエリア */}
+      {/* 画面幅の半分を占め、Flexboxで内容を中央に配置 */}
       <div className="w-1/2 flex items-center justify-center p-8">
         <div className="max-w-2xl mx-auto">
           {/* キャッチコピー */}
@@ -18,6 +19,7 @@ export default function PhraseSection() {
           </h2>
 
           {/* 説明文 */}
+          {/* ここにはmb-8がすでに適用されていますが、今回は関係ありません */}
           <p className="text-lg sm:text-xl md:text-2xl mb-8 text-center drop-shadow-lg leading-relaxed">
             世界遺産・白神山地ふもとの秋田県藤里町で、農泊を体験しませんか。里山の旬の恵みを味わい、地元の方々と交流する中で、昔ながらの暮らしや文化に触れられます。日常を忘れ、心身を癒す特別なひとときが待っています。
           </p>
@@ -31,6 +33,7 @@ export default function PhraseSection() {
           alt="滝の画像"
           fill
           style={{ objectFit: 'cover', objectPosition: 'bottom' }}
+ 
           priority
         />
       </div>

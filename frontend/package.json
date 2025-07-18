@@ -20,14 +20,24 @@
     "swiper": "^11.2.8"
   },
   "devDependencies": {
+    "@babel/core": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
+    "@babel/preset-react": "^7.27.1",
+    "@babel/preset-typescript": "^7.27.1",
     "@swc/jest": "^0.2.39",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/jest": "^30.0.0",
     "@types/node": "^20",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@types/text-encoding": "^0.0.40",
     "autoprefixer": "^10.4.19",
+    "babel-jest": "^30.0.4",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.5",
+    "jest": "^30.0.4",
     "jest-environment-jsdom": "^29.7.0",
     "postcss": "^8.4.38",
     "rimraf": "^6.0.1",
@@ -36,4 +46,3 @@
     "typescript": "^5.8.3"
   }
 }
-

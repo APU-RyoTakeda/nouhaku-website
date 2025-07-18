@@ -1,26 +1,19 @@
 // frontend/src/types/booking.ts
-// 予約フォームのデータ構造を定義するインターフェース
-// このファイルを新しく作成し、他のファイルからインポートすることを推奨します。
+
+/**
+ * 予約フォームのデータを表すインターフェース。
+ * ユーザーが入力するすべての予約関連情報を含みます。
+ */
 export interface BookingFormData {
-  checkInDate: string;
-  checkOutDate: string;
-  checkInTime: string;
-  lodging: string;
-  adultMale: number;
-  adultFemale: number;
-  child7_12: number;
-  childUnder6: number;
-  lastName: string;
-  firstName: string;
-  lastNameKana: string;
-  firstNameKana: string;
-  gender: string;
-  phoneNumber: string;
-  email: string;
-  postalCode1: string;
-  postalCode2: string;
-  prefecture: string;
-  city: string;
-  street: string;
-  remarks: string;
+  checkInDate: string; // チェックイン日 (YYYY-MM-DD 形式)
+  checkOutDate: string; // チェックアウト日 (YYYY-MM-DD 形式)
+  checkInTime: string; // チェックイン時間 (HH:MM 形式)
+  lodging: string;     // 選択された宿の名前
+  name: string;        // 予約者の氏名
+  email: string;       // 予約者のメールアドレス
+  phone: string;       // 予約者の電話番号
+  adults: number;      // 大人の人数
+  children: number;    // 子供の人数
+  notes: string;       // 備考、特記事項
+  totalPrice: number;  // 予約の合計金額
 }

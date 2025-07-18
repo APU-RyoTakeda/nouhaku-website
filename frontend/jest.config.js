@@ -1,16 +1,23 @@
 // frontend/jest.config.js
-const nextJest = require('next/jest');
-
-const createJestConfig = nextJest({
-  dir: './', // Next.jsアプリのルートディレクトリ
-});
-
-/** @type {import('jest').Config} */
-const config = {
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
-  testEnvironment: 'jest-environment-jsdom',
-  // moduleNameMapper は不要な場合が多いので削除
-  // transformIgnorePatterns も next/jest が適切に処理するため、基本的には不要
+module.exports = {
+  testEnvironment: 'jsdom',
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  transform: {
+    // .ts, .tsx ファイルを Babel で変換
+    '^.+\\.(ts|tsx)$': 'babel-jest',
+    // .js, .jsx ファイルも Babel で変換するように追加
+    // jest.setup.js が .js ファイルなので、これが重要
+    '^.+\\.(js|jsx)$': 'babel-jest',
+  },
+  transformIgnorePatterns: [
+    '/node_modules/(?!(.*some-es-module.*))', // 必要に応じて調整
+  ],
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1',
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+  },
+  testMatch: [
+    '<rootDir>/**/*.test.(ts|tsx|js|jsx)', // .js, .jsx のテストファイルも対象に含める
+  ],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
 };
-
-module.exports = createJestConfig(config);

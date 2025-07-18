@@ -5,7 +5,7 @@ import HouseCard from '@/components/cards/HouseCard';
 const dummyHouses = [
  
   {
-    slug: 'mori-no-ibuki',
+    slug: 'sanko-no-yado',
     imageUrl: '/images/houses/sannko_top.jpg',
     imageAlt: '森の息吹',
     title: '農家民宿　さんこの宿',
@@ -14,7 +14,7 @@ const dummyHouses = [
     price: '1泊 9000円/1名（税込）',
   },
   {
-    slug: 'umi-no-sato',
+    slug: 'tou',
     imageUrl: '/images/houses/tou_top.png',
     imageAlt: '海の郷',
     title: '農家民宿　陶',
@@ -23,7 +23,7 @@ const dummyHouses = [
     price: '1泊 9000円/1名（税込）',
   },
   {
-    slug: 'yuki-no-sato',
+    slug: 'buna-no-mori',
     imageUrl: '/images/houses/buna_top.jpg',
     imageAlt: '雪の里',
     title: '農家民宿　ブナの森',

@@ -5,7 +5,7 @@ import Link from 'next/link';
 // ダミーの施設詳細データ
 const dummyHouseDetails = {
   // --- 農家民宿 さんこの宿 ---
-  'mori-no-ibuki': {
+  'sanko-no-yado': {
     title: '農家民宿 さんこの宿',
     location: '秋田県藤里町',
     description: '「みんなで食べるご飯は美味しい。」楽しい会話は最高のスパイス。暖かくて楽しいごはんをめしあがれ。',
@@ -25,7 +25,7 @@ const dummyHouseDetails = {
     relatedCouncil: 'ふじさと粕毛まちづくり協議会',
   },
   // --- 農家民宿 陶 ---
-  'umi-no-sato': {
+  'tou': {
     title: '農家民宿 陶',
     location: '秋田県藤里町',
     description: '料理上手なお母さんの創作レシピや郷土料理をこだわりの器で提供。世界に二つとない素敵な宿。',
@@ -34,7 +34,7 @@ const dummyHouseDetails = {
       { src: '/images/houses/tou_2.png', alt: '陶 食卓（海の幸）' },
       { src: '/images/houses/tou_3.png', alt: '陶 室内' },
     ],
-     price: '1泊 9000円/1名(税込),暖房費別途500円/1人',
+    price: '1泊 9000円/1名(税込),暖房費別途500円/1人',
     capacity: '1～4名',
     access: '大館能代空港から車で約25分。秋田自動車道：二ツ井白神ICから22分。',
     shuttle: '送迎あり',
@@ -45,7 +45,7 @@ const dummyHouseDetails = {
     relatedCouncil: 'ふじさと粕毛まちづくり協議会',
   },
   // --- 農家民宿 ブナの森 ---
-  'yuki-no-sato': {
+  'buna-no-mori': {
     title: '農家民宿 ブナの森',
     location: '秋田県藤里町',
     description: '四季を感じられる眺めのよい部屋。お父さんとの会話は夜に飲むお酒の一番の肴。',
@@ -120,10 +120,8 @@ export default async function HouseDetailPage({ params }: HouseDetailPageProps) 
             ))}
           </div>
 
-          {/* コンテンツ部分を全幅にするため、md:grid-cols-3は削除 */}
-          {/* その代わり、直下にボタンを追加 */}
-          <div className="grid grid-cols-1 md:grid-cols-1 gap-8"> {/* ★ md:grid-cols-3をmd:grid-cols-1に変更 */}
-            <div className="md:col-span-1"> {/* ★md:col-span-2をmd:col-span-1に変更、これによりコンテンツ部分が1カラムに */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="md:col-span-3"> {/* ★ここをmd:col-span-2からmd:col-span-3に変更 */}
               <h2 className="text-2xl font-bold text-gray-800 mb-4">施設について</h2>
               <p className="text-gray-700 leading-relaxed mb-6">
                 {house.description}
@@ -136,17 +134,6 @@ export default async function HouseDetailPage({ params }: HouseDetailPageProps) 
                 <li>定員: {house.capacity}</li>
               </ul>
 
-              {/* 体験アクティビティ (非表示のまま) */}
-              {house.activities && Array.isArray(house.activities) && house.activities.length > 0 && (
-                <>
-                  <h3 className="text-xl font-bold text-gray-800 mb-3">体験アクティビティ</h3>
-                  <ul className="list-disc list-inside text-gray-700 mb-6">
-                    {house.activities.map((activity, index) => (
-                      <li key={index}>{activity}</li>
-                    ))}
-                  </ul>
-                </>
-              )}
 
               {/* 新しく追加する情報セクション */}
               {house.access && (
@@ -178,11 +165,7 @@ export default async function HouseDetailPage({ params }: HouseDetailPageProps) 
                       電話&FAX: <a href={`tel:${house.phone}`} className="text-blue-600 hover:underline">{house.phone}</a>
                     </p>
                   )}
-                  {house.url && (
-                    <p className="text-gray-700 leading-relaxed mb-6">
-                      URL: <Link href={house.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{house.url}</Link>
-                    </p>
-                  )}
+                  
                 </>
               )}
               {house.note && (
@@ -198,14 +181,12 @@ export default async function HouseDetailPage({ params }: HouseDetailPageProps) 
                 </>
               )}
 
-              {/* ★予約ボタンをここに追加します。メインコンテンツの直下。 */}
-              <div className="mt-8 pt-8 border-t border-gray-200"> {/* 上部に余白と区切り線 */}
+              {/* 予約ボタンを追加 */}
+              <div className="mt-8 pt-8 border-t border-gray-200">
                 <Link href="/booking" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg transition duration-300 transform hover:scale-105 block text-center text-xl">
                   この施設を予約する
                 </Link>
               </div>
-              {/* ★予約ボタンここまで★ */}
-
             </div>
             
             {/* 右側のサイドバーは完全に削除したので、ここには何も残りません */}
